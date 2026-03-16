@@ -37,6 +37,7 @@
       imports = [
         (import-tree ./modules)       # Auto-loads your features
         ./hosts/nixovm/nixovm.nix     # Explicitly loads your grouped host
+	./hosts/omenixos/omenixos.nix
       ];
     };
 }
