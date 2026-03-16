@@ -11,24 +11,37 @@
     config = lib.mkIf cfg.enable {
       
       home-manager.users.shonh = {
+        
         home.packages = [ pkgs.ripdrag ];
 
         programs.yazi = {
           enable = true;
-          enableBashIntegration = true;
-	  # enableZshIntegration = true;
+          enableBashIntegration = true; 
           
+          settings = {
+            opener = {
+              edit = [
+                { run = "nvim \"$@\""; block = true; desc = "Neovim"; }
+              ];
+            };
+            open = {
+              prepend_rules = [
+                { mime = "text/*"; use = "edit"; }
+              ];
+            };
+          };
+
           keymap = {
-            manager.prepend_keymap = [
+            mgr.prepend_keymap = [
               {
-                on = [ "<C-d>" ];
-                # Passes the selected file(s) to ripdrag in the background
-                run = "shell 'ripdrag \"$@\" -x 2>/dev/null &' --confirm";
+                on = [ "<C-n>" ]; 
+                run = "shell 'ripdrag \"$@\" -x 2>/dev/null' --confirm --orphan";
                 desc = "Drag and drop selected files";
               }
             ];
           };
         };
+        
       };
     };
   };
