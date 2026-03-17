@@ -1,7 +1,6 @@
 { ... }:
 
 {
-  # 1. FIXED: Renamed to avoid crushing your Stylix module
   flake.nixosModules.login-manager = { config, lib, pkgs, ... }:
   let
     cfg = config.mySystem.system.login-manager;

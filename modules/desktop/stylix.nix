@@ -11,7 +11,7 @@
       stylix = {
       	enable = true;
 
-	image = inputs.self + "/wallpapers/wallpaper1.png";
+	image = inputs.self + "/wallpapers/wallpaper2.png";
       	polarity = "dark";
 
       	cursor = {

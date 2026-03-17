@@ -83,13 +83,9 @@ in {
 
       # --- Base Applications ---
       environment.systemPackages = with pkgs; [
-        # Add baseline packages like vim or git here later
         tree
-        neovim
-        fastfetch
         sl
         vivaldi
-        git
       ];
     };
   };

@@ -18,16 +18,27 @@
           networking.hostName = "omenixos";
           system.stateVersion = "25.11";
           
-          boot.loader = {
-            grub = {
-              enable = true;
-              efiSupport = true;
-              device = "nodev";
-              useOSProber = true;
-            };
+          boot = {
+	    loader = {
+              grub = {
+                enable = true;
+                efiSupport = true;
+                device = "nodev";
+                useOSProber = true;
+              };
           
-            efi.canTouchEfiVariables = true;
-          };
+              efi.canTouchEfiVariables = true;
+            };
+
+	    initrd.systemd.tpm2.enable = false;
+	    kernelParams = [
+              "systemd.mask=dev-tpm0.device"
+              "systemd.mask=dev-tpmrm0.device"
+	    ];
+	  };
+
+	  systemd.tpm2.enable = false;
+
 
           # --- 2TB SHARED DRIVE MOUNT ---
           fileSystems."/mnt/shared" = {
@@ -41,14 +52,24 @@
             # Turn on the core system
             system.core.enable = true;
 
+	    # Hardware-specific modules
+	    hardware.nvidia.enable = true;
+
 	    # Enable Apps
-            apps.foot.enable = true; 
-	    apps.yazi.enable = true;
+            apps = {
+	      foot.enable = true; 
+	      yazi.enable = true;
+	      neovim.enable = true;
+	      fastfetch.enable = true;
+	      git.enable = true;
+	    };
 
 	    # Define Environment
-	    desktop.hyprland.enable = true;
-	    desktop.noctalia.enable = true;
-	    desktop.stylix.enable = true;
+	    desktop = {
+	      hyprland.enable = true;
+	      noctalia.enable = true;
+	      stylix.enable = true;
+	    };
 	  };
         })
       ];
