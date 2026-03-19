@@ -19,6 +19,18 @@
         
         programs.noctalia-shell = {
           enable = true;
+
+	  settings = {
+	    bar = {
+	      widgets = {
+		center = [
+		  {
+		    id = "Workspace";
+		  }
+		];
+	      };
+	    };
+	  };
         };
       };
     };

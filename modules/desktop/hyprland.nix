@@ -23,7 +23,8 @@
 	  settings = {
 	    "$terminal" = "foot";
 	    "$browser" = "vivaldi";
-	    "$file-manager" = "foot yazi";
+	    "$file-manager" = "thunar";
+	    "$code_editor" = "zeditor";
 	    "$mod" = "SUPER";
 
 	    "exec-once" = [
@@ -32,7 +33,7 @@
 
 	    monitor = [ 
 	      "Virtual-1,1280x720,auto,1"
-	      ",highres@highrr,auto,1" # Default
+	      ",preferred,auto,1" # Default
 	    ];
 
 	    bind = [
@@ -40,6 +41,12 @@
 	      "$mod, T, exec, uwsm app -- $terminal"
 	      "$mod, F, exec, uwsm app -- $browser"
 	      "$mod, E, exec, uwsm app -- $file-manager"
+	      "$mod, C, exec, uwsm app -- $code_editor"
+
+              "$mod, D, workspace, name:discord"
+              "$mod, S, exec, hyprctl dispatch workspace 11 && uwsm app -- spotify"
+              "$mod, G, exec, hyprctl dispatch workspace 10 && uwsm app -- steam"
+              "$mod+Shift, G, exec, hyprctl dispatch workspace 10 && uwsm app -- gamescope -w 1920 -h 1080 -W 1920 -H 1080 -r 200 -e -f --xwayland-count 2 --hdr-enabled --hdr-itm-enabled --force-grab-cursor -- steam -noverifyfiles -gamepadui"
 
 	      # Desktop Keybinds
 	      "$mod, Delete, exit,"
@@ -139,11 +146,18 @@
 	    windowrule = [
               # Opacity Rules
               "match:class ^($terminal)$, opacity 0.80 0.80"
+              "match:class ^([tT]hunar)$, opacity 0.75 0.75"
+	      "match:class ^(discord)$, opacity 0.80 0.80"
+	      "match:class ^([sS]potify)$, opacity 0.80 0.80"
+	      "match:class ^(dev.zed.Zed)$, opacity 0.92 0.92"
+	      "match:class ^(obsidian)$, opacity 0.92 0.92"
 	    ];
 
             workspace = [
               "10, border:false, rounding:false"
               "special:terminal, on-created-empty:[float; size 960 540] $terminal, persistent:false"
+
+	      "name:discord, on-created-empty:uwsm app -- discord"
       	    ];
 
             gesture = [

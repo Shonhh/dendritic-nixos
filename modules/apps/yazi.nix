@@ -2,22 +2,23 @@
 { ... }:
 
 {
-  flake.nixosModules.yazi = { config, lib, pkgs, ... }: 
+  flake.nixosModules.yazi = { config, lib, pkgs, ... }:
   let
     cfg = config.mySystem.apps.yazi;
   in {
     options.mySystem.apps.yazi.enable = lib.mkEnableOption "Yazi File Manager";
 
     config = lib.mkIf cfg.enable {
-      
+
       home-manager.users.shonh = {
-        
+
         home.packages = [ pkgs.ripdrag ];
 
         programs.yazi = {
           enable = true;
-          enableBashIntegration = true; 
-          
+          enableBashIntegration = true;
+          shellWrapperName = "y";
+
           settings = {
             opener = {
               edit = [
@@ -34,14 +35,14 @@
           keymap = {
             mgr.prepend_keymap = [
               {
-                on = [ "<C-n>" ]; 
+                on = [ "<C-n>" ];
                 run = "shell 'ripdrag \"$@\" -x 2>/dev/null' --confirm --orphan";
                 desc = "Drag and drop selected files";
               }
             ];
           };
         };
-        
+
       };
     };
   };

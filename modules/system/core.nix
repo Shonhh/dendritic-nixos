@@ -17,8 +17,6 @@ in {
 	max-jobs = 1;
       };
 
-      nixpkgs.config.allowUnfree = true;
-
       # --- Kernel ---
       boot.kernelPackages = pkgs.linuxPackages_latest;
 

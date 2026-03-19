@@ -11,8 +11,9 @@
       stylix = {
       	enable = true;
 
-	image = inputs.self + "/wallpapers/wallpaper1.jpg";
+	image = inputs.self + "/wallpapers/gruvified-wallpaper.png";
       	polarity = "dark";
+	base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
 
       	cursor = {
           package = pkgs.phinger-cursors;
@@ -41,11 +42,13 @@
 	};
       };
 
-      home-manager.users.shonh.home.sessionVariables = {
+      home-manager.users.shonh = {
+        home.sessionVariables = {
 	  XCURSOR_THEME = config.stylix.cursor.name;
           XCURSOR_SIZE = toString config.stylix.cursor.size;
           HYPRCURSOR_THEME = config.stylix.cursor.name;
           HYPRCURSOR_SIZE = toString config.stylix.cursor.size;
+	};
       };
     };
   };
