@@ -51,7 +51,7 @@
                 "$mod, C, exec, uwsm app -- $code_editor"
 
                 "$mod, D, workspace, name:discord"
-                "$mod, S, exec, hyprctl dispatch workspace 11 && uwsm app -- spotify"
+                "$mod, S, workspace, name:spotify"
                 "$mod, G, exec, hyprctl dispatch workspace 10 && uwsm app -- steam"
                 "$mod+Shift, G, exec, steam-console"
 
@@ -165,6 +165,7 @@
                 "special:terminal, on-created-empty:[float; size 960 540] $terminal, persistent:false"
 
                 "name:discord, on-created-empty:uwsm app -- discord"
+                "name:spotify, on-created-empty:uwsm app -- spotify"
               ];
 
               gesture = [

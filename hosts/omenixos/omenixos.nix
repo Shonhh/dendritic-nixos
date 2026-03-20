@@ -81,6 +81,7 @@
               discord.enable = true;
               zed.enable = true;
               steam.enable = true;
+              spotify.enable = true;
             };
 
             games = {
