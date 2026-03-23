@@ -49,6 +49,7 @@
                 "$mod, F, exec, uwsm app -- $browser"
                 "$mod, E, exec, uwsm app -- $file-manager"
                 "$mod, C, exec, uwsm app -- $code_editor"
+                "$mod, N, exec, uwsm app -- obsidian"
 
                 "$mod, D, workspace, name:discord"
                 "$mod, S, workspace, name:spotify"

@@ -103,16 +103,6 @@
                       useFixedWidth = false;
                       visualizerType = "linear";
                     }
-                    {
-                      colorizeIcons = false;
-                      hideMode = "hidden";
-                      id = "ActiveWindow";
-                      maxWidth = 145;
-                      scrollingMode = "hover";
-                      showIcon = true;
-                      textColor = "none";
-                      useFixedWidth = false;
-                    }
                   ];
                   center = [
                     {
@@ -532,7 +522,7 @@
                     action = "suspend";
                     command = "";
                     countdownEnabled = true;
-                    enabled = true;
+                    enabled = false;
                     keybind = "2";
                   }
                   {
