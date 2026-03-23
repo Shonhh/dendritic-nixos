@@ -160,6 +160,10 @@
                 "match:class ^(obsidian)$, opacity 0.92 0.92"
               ];
 
+              layerrule = [
+
+              ];
+
               workspace = [
                 "10, border:false, rounding:false"
                 "special:terminal, on-created-empty:[float; size 960 540] $terminal, persistent:false"

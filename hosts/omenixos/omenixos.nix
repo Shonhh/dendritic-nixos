@@ -82,6 +82,8 @@
               zed.enable = true;
               steam.enable = true;
               spotify.enable = true;
+              btop.enable = true;
+              obsidian.enable = true;
             };
 
             games = {

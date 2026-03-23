@@ -46,7 +46,7 @@
               --xwayland-count 2 \
               --hdr-enabled --hdr-itm-enabled \
               --force-grab-cursor \
-              -- steam -noverifyfiles -gamepadui
+              -- sh -c 'unset LD_PRELOAD; steam -noverifyfiles -gamepadui'
           '')
         ];
       };
