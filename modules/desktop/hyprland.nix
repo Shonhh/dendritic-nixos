@@ -64,6 +64,7 @@
                 "$mod, Q, killactive,"
                 "$mod, W, togglefloating,"
                 "$mod+SHIFT, F, fullscreen"
+                "$mod, P, exec, noctalia-shell ipc call plugin:screen-shot-and-record screenshot"
                 "$mod, J, togglesplit," # dwindle
 
                 # Move focus with mod + arrow keys

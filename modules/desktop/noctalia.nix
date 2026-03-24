@@ -522,7 +522,7 @@
                     action = "suspend";
                     command = "";
                     countdownEnabled = true;
-                    enabled = false;
+                    enabled = true;
                     keybind = "2";
                   }
                   {
@@ -688,6 +688,13 @@
               };
             };
           };
+
+          # Screenshot Plugin Dependencies
+          home.packages = with pkgs; [
+            grim
+            imagemagick
+            wl-clipboard
+          ];
         };
       };
     };
