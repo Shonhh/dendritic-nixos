@@ -22,6 +22,9 @@
         mySystem.system.power-management.enable = true;
         mySystem.hardware.bluetooth.enable = true;
 
+        # Noctalia needs a secret service
+        services.gnome.gnome-keyring.enable = true;
+
         home-manager.users.shonh = {
           imports = [ inputs.noctalia.homeModules.default ];
 

@@ -23,7 +23,7 @@
               temurin-jre-bin-21
             ];
           })
-          badlion-client
+          lunar-client
         ];
       };
     };

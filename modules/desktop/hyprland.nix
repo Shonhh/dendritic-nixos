@@ -163,7 +163,7 @@
               ];
 
               layerrule = [
-
+                "match:namespace noctalia-shell:regionSelector, no_anim on"
               ];
 
               workspace = [

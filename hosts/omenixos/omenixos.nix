@@ -65,6 +65,7 @@
               core.enable = true;
               flatpak.enable = true;
               development.enable = true;
+              polkit.enable = true;
             };
 
             # Hardware-specific modules
