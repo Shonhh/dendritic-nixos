@@ -19,7 +19,7 @@
           networking.hostName = "omenixos";
           system.stateVersion = "25.11";
 
-          # disable wallpaper injection from stylix in limine
+          # disable stylix limine theming
           stylix.targets.limine.image.enable = lib.mkIf config.mySystem.desktop.stylix.enable false;
 
           boot = {
@@ -49,9 +49,21 @@
 
             initrd.systemd.tpm2.enable = false;
             kernelParams = [
+              # faster boots, mask this system
               "systemd.mask=dev-tpm0.device"
               "systemd.mask=dev-tpmrm0.device"
+
+              # minimal startup
+              "quiet"
+              "splash"
+              "boot.shell_on_fail"
+              "udev.log_priority=3"
+              "rd.systemd.show_status=auto"
             ];
+
+            # minimal startup
+            consoleLogLevel = 3;
+            initrd.verbose = false;
           };
 
           systemd.tpm2.enable = false;
@@ -113,6 +125,7 @@
               hyprland.enable = true;
               noctalia.enable = true;
               stylix.enable = true;
+              plymouth.enable = true;
             };
           };
         }

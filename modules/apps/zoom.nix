@@ -12,7 +12,7 @@
       cfg = config.mySystem.apps.zoom;
     in
     {
-      options.mySystem.apps.zoom.enable = lib.mkEnableOption "Minecraft and its Launchers";
+      options.mySystem.apps.zoom.enable = lib.mkEnableOption "Zoom-US Application";
 
       config = lib.mkIf cfg.enable {
         home-manager.users.shonh.home.packages = with pkgs; [

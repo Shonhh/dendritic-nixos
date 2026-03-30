@@ -28,7 +28,7 @@
         };
 
         # --- Kernel ---
-        boot.kernelPackages = pkgs.linuxPackages_latest;
+        boot.kernelPackages = pkgs.linuxPackages_zen;
 
         # --- Networking ---
         networking.networkmanager.enable = true;
