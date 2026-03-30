@@ -34,6 +34,10 @@
             ];
 
             userSettings = {
+              terminal = {
+                font-family = "${config.stylix.fonts.monospace.name}";
+              };
+
               languages = {
                 Nix = {
                   language_servers = [
@@ -113,7 +117,7 @@
 
               icon_theme = "Colored Zed Icons Theme Dark";
 
-              buffer_font_family = "Fira Code Nerd Font";
+              buffer_font_family = "${config.stylix.fonts.monospace.name}";
               buffer_font_size = 15.0;
               theme = "Gruvbox Baby";
 

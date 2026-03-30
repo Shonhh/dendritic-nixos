@@ -274,7 +274,7 @@
               };
               ui = {
                 fontDefault = "Lato";
-                fontFixed = "Fira Code Nerd Font";
+                fontFixed = "${config.stylix.fonts.monospace.name}";
                 fontDefaultScale = 1;
                 fontFixedScale = 1;
                 tooltipsEnabled = true;

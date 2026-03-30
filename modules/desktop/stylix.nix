@@ -32,7 +32,7 @@
           fonts = {
             monospace = {
               package = pkgs.nerd-fonts.fira-code;
-              name = "Fira Code Nerd Font";
+              name = "FiraCode Nerd Font";
             };
 
             sansSerif = {

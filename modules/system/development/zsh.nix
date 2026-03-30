@@ -17,11 +17,9 @@
       config = lib.mkIf cfg.enable {
         programs.zsh.enable = true;
         users.users.shonh.shell = pkgs.zsh;
+        mySystem.system.starship.enable = true;
 
         home-manager.users.shonh = {
-          mySystem.system.starship.enable = true;
-
-          # 2. The Shell & Plugins
           programs.zsh = {
             enable = true;
             enableCompletion = true;

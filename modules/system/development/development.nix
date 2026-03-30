@@ -28,9 +28,9 @@
             enable = true;
             nix-direnv.enable = true;
           };
-
-          mySystem.system.zsh.enable = true;
         };
+
+        mySystem.system.zsh.enable = true;
       };
     };
 }

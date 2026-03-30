@@ -36,6 +36,8 @@
     spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
     };
+
+    nix-colorizer.url = "github:nutsalhan87/nix-colorizer";
   };
 
   outputs =
