@@ -14,20 +14,36 @@
       ./hardware-configuration.nix
 
       (
-        { ... }:
+        { lib, config, ... }:
         {
           networking.hostName = "omenixos";
           system.stateVersion = "25.11";
 
+          # disable wallpaper injection from stylix in limine
+          stylix.targets.limine.image.enable = lib.mkIf config.mySystem.desktop.stylix.enable false;
+
           boot = {
             loader = {
-              grub = {
+              limine = {
                 enable = true;
-                efiSupport = true;
-                device = "nodev";
-                useOSProber = true;
+                secureBoot.enable = false;
+
+                style = lib.mkIf config.mySystem.desktop.stylix.enable {
+                  wallpapers = lib.mkForce [ ];
+                  backdrop = lib.mkForce config.lib.stylix.colors.base00;
+                  graphicalTerminal.background = lib.mkForce "00${config.lib.stylix.colors.base00}";
+                };
+
+                # chainload Windows
+                extraEntries = ''
+                  /Windows 11
+                      protocol: efi
+                      path: uuid(e6d3d16d-54ea-41e5-88fb-ef2040284a01):/EFI/Microsoft/Boot/bootmgfw.efi
+                      comment: Boot into Windows 11
+                '';
               };
 
+              timeout = 5;
               efi.canTouchEfiVariables = true;
             };
 
@@ -85,6 +101,7 @@
               spotify.enable = true;
               btop.enable = true;
               obsidian.enable = true;
+              zoom.enable = true;
             };
 
             games = {

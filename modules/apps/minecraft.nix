@@ -23,7 +23,6 @@
               temurin-jre-bin-21
             ];
           })
-          lunar-client
         ];
       };
     };

@@ -96,7 +96,14 @@
         environment.systemPackages = with pkgs; [
           tree
           sl
+          cmatrix
+          cbonsai
           vivaldi
+          wget
+          unzip
+          vlc
+          kdePackages.filelight
+          efibootmgr
         ];
       };
     };
