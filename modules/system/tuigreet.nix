@@ -9,10 +9,10 @@
       ...
     }:
     let
-      cfg = config.mySystem.system.login-manager;
+      cfg = config.mySystem.system.tuigreet;
     in
     {
-      options.mySystem.system.login-manager.enable = lib.mkEnableOption "TuiGreetd Login Manager";
+      options.mySystem.system.tuigreet.enable = lib.mkEnableOption "TuiGreetd Login Manager";
 
       config = lib.mkIf cfg.enable {
         security.pam.services.greetd.enableGnomeKeyring = true;
