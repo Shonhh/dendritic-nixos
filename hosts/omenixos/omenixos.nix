@@ -94,6 +94,7 @@
               flatpak.enable = true;
               development.enable = true;
               polkit.enable = true;
+              nixgc.enable = true;
             };
 
             # Hardware-specific modules

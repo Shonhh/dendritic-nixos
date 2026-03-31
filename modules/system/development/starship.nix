@@ -37,13 +37,13 @@
                   color_bg3 = "#${config.lib.stylix.colors.base03}"; # Selection Background
                   color_fg_alt = "#${config.lib.stylix.colors.base04}"; # Replaces the hardcoded #83a598
 
-                  color_blue = darken "#${config.lib.stylix.colors.base0D}" 0.2; # Blue
-                  color_aqua = darken "#${config.lib.stylix.colors.base0C}" 0.2; # Cyan
-                  color_green = darken "#${config.lib.stylix.colors.base0B}" 0.2; # Green
-                  color_orange = darken "#${config.lib.stylix.colors.base09}" 0.2; # Orange
-                  color_purple = darken "#${config.lib.stylix.colors.base0E}" 0.2; # Magenta
-                  color_red = darken "#${config.lib.stylix.colors.base08}" 0.2; # Red
-                  color_yellow = darken "#${config.lib.stylix.colors.base0A}" 0.2; # Yellow
+                  color_blue = darken "#${config.lib.stylix.colors.base0D}" 0.16; # Blue
+                  color_aqua = darken "#${config.lib.stylix.colors.base0C}" 0.16; # Cyan
+                  color_green = darken "#${config.lib.stylix.colors.base0B}" 0.16; # Green
+                  color_orange = darken "#${config.lib.stylix.colors.base09}" 0.16; # Orange
+                  color_purple = darken "#${config.lib.stylix.colors.base0E}" 0.16; # Magenta
+                  color_red = darken "#${config.lib.stylix.colors.base08}" 0.16; # Red
+                  color_yellow = darken "#${config.lib.stylix.colors.base0A}" 0.16; # Yellow
                 };
 
               os = {

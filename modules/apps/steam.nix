@@ -42,7 +42,7 @@
 
           (writeShellScriptBin "steam-console" ''
             hyprctl dispatch workspace 10
-            uwsm app -- gamemoderun gamescope \
+            uwsm-app -- gamemoderun gamescope \
               -w 1920 -h 1080 -W 1920 -H 1080 -r 200 \
               -e -f \
               --xwayland-count 2 \

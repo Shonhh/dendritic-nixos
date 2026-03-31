@@ -35,7 +35,7 @@
               "$mod" = "SUPER";
 
               "exec-once" = [
-                "uwsm app -- noctalia-shell"
+                "uwsm-app -- noctalia-shell"
               ];
 
               monitor = [
@@ -45,21 +45,21 @@
 
               bind = [
                 # Applications
-                "$mod, T, exec, uwsm app -- $terminal"
-                "$mod, F, exec, uwsm app -- $browser"
-                "$mod, E, exec, uwsm app -- $file-manager"
-                "$mod, C, exec, uwsm app -- $code_editor"
-                "$mod, N, exec, uwsm app -- obsidian"
+                "$mod, T, exec, uwsm-app -- $terminal"
+                "$mod, F, exec, uwsm-app -- $browser"
+                "$mod, E, exec, uwsm-app -- $file-manager"
+                "$mod, C, exec, uwsm-app -- $code_editor"
+                "$mod, N, exec, uwsm-app -- obsidian"
 
                 "$mod, D, workspace, name:discord"
                 "$mod, S, workspace, name:spotify"
-                "$mod, G, exec, hyprctl dispatch workspace 10 && uwsm app -- steam"
+                "$mod, G, exec, hyprctl dispatch workspace 10 && uwsm-app -- steam"
                 "$mod+Shift, G, exec, steam-console"
 
                 # Desktop Keybinds
                 "$mod, Delete, exit,"
                 "$mod+Alt, G, exec, ~/nixos/scripts/gamemode.sh"
-                "CTRL+ALT, W, exec, noctalia-shell kill || uwsm app -- noctalia-shell"
+                "CTRL+ALT, W, exec, noctalia-shell kill || uwsm-app -- noctalia-shell"
                 "$mod, A, exec, noctalia-shell ipc call launcher toggle"
                 "$mod, Q, killactive,"
                 "$mod, W, togglefloating,"
@@ -170,8 +170,8 @@
                 "10, border:false, rounding:false"
                 "special:terminal, on-created-empty:[float; size 960 540] $terminal, persistent:false"
 
-                "name:discord, on-created-empty:uwsm app -- discord"
-                "name:spotify, on-created-empty:uwsm app -- spotify"
+                "name:discord, on-created-empty:uwsm-app -- discord"
+                "name:spotify, on-created-empty:uwsm-app -- spotify"
               ];
 
               gesture = [

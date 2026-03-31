@@ -28,6 +28,7 @@
         home-manager.users.shonh = {
           imports = [ inputs.noctalia.homeModules.default ];
 
+          # enable and customize noctalia
           programs.noctalia-shell = {
             enable = true;
 
@@ -365,8 +366,8 @@
                 useApp2Unit = false;
                 sortByMostUsed = true;
                 terminalCommand = "foot";
-                customLaunchPrefixEnabled = false;
-                customLaunchPrefix = "";
+                customLaunchPrefixEnabled = true;
+                customLaunchPrefix = "uwsm-app -- ";
                 viewMode = "list";
                 showCategories = false;
                 iconMode = "tabler";
