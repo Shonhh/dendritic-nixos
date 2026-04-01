@@ -29,6 +29,7 @@
 
         # --- Kernel ---
         boot.kernelPackages = pkgs.linuxPackages_zen;
+        boot.kernelModules = [ "ntsync" ];
 
         # --- Networking ---
         networking.networkmanager.enable = true;
@@ -74,6 +75,7 @@
           extraGroups = [
             "networkmanager"
             "wheel"
+            "i2c"
           ];
         };
 

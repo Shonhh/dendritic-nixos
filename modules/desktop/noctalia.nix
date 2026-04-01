@@ -1,4 +1,3 @@
-# modules/desktop/noctalia.nix
 { ... }:
 
 {
@@ -24,6 +23,10 @@
 
         # Noctalia needs a secret service
         services.gnome.gnome-keyring.enable = true;
+
+        # I2C Hardware bus for brightness controls
+        hardware.i2c.enable = true;
+        environment.systemPackages = [ pkgs.ddcutil ];
 
         home-manager.users.shonh = {
           imports = [ inputs.noctalia.homeModules.default ];
@@ -367,7 +370,7 @@
                 sortByMostUsed = true;
                 terminalCommand = "foot";
                 customLaunchPrefixEnabled = true;
-                customLaunchPrefix = "uwsm-app -- ";
+                customLaunchPrefix = "uwsm-app --";
                 viewMode = "list";
                 showCategories = false;
                 iconMode = "tabler";
