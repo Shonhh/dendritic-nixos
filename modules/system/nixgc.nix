@@ -20,6 +20,8 @@
           dates = "weekly";
           options = "--delete-older-than 14d";
         };
+
+        nix.autoOptimiseStore = true;
       };
     };
 }
