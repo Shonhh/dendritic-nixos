@@ -22,8 +22,8 @@
           enable32Bit = true; # Crucial for 32-bit games (like older Terraria versions/mods)
 
           extraPackages = with pkgs; [
-            intel-intel-media-driver
-            vpl-vpl-gpu-rt
+            intel-media-driver
+            vpl-gpu-rt
           ];
         };
 
