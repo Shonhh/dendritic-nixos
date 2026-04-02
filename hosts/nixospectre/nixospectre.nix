@@ -44,7 +44,7 @@
               };
 
               timeout = 5;
-              efi.canTouchEfiVariables = true;
+              efi.canTouchEfiVariables = false; # errors with laptop
             };
 
             kernelParams = [
