@@ -16,6 +16,13 @@
       options.mySystem.desktop.noctalia.enable = lib.mkEnableOption "Noctalia Shell";
 
       config = lib.mkIf cfg.enable {
+        # Skip local compilation
+        nix.settings = {
+          extra-substituters = [ "https://noctalia.cachix.org" ];
+          extra-trusted-public-keys = [
+            "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+          ];
+        };
 
         # Noctalia needs these background services to read battery and hardware data
         mySystem.system.power-management.enable = true;

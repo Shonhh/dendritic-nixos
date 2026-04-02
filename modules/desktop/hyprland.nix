@@ -15,6 +15,13 @@
       options.mySystem.desktop.hyprland.enable = lib.mkEnableOption "Hyprland Wayland Compositor";
 
       config = lib.mkIf cfg.enable {
+        # Skip local compilation
+        nix.settings = {
+          substituters = [ "https://hyprland.cachix.org" ];
+          trusted-substituters = [ "https://hyprland.cachix.org" ];
+          trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+        };
+
         # --- System Level Setup ---
         programs.hyprland = {
           enable = true;
