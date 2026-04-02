@@ -1,7 +1,7 @@
 { inputs, config, ... }:
 
 {
-  flake.nixosConfigurations."omenixos" = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations."nixospectre" = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = { inherit inputs; };
 
@@ -16,7 +16,7 @@
       (
         { lib, config, ... }:
         {
-          networking.hostName = "omenixos";
+          networking.hostName = "nixospectre";
           system.stateVersion = "25.11";
 
           # disable stylix limine theming
@@ -38,7 +38,7 @@
                 extraEntries = ''
                   /Windows 11
                       protocol: efi
-                      path: uuid(e6d3d16d-54ea-41e5-88fb-ef2040284a01):/EFI/Microsoft/Boot/bootmgfw.efi
+                      path: uuid(ba6caefb-d7fa-4822-be6a-4784db155c46):/EFI/Microsoft/Boot/bootmgfw.efi
                       comment: Boot into Windows 11
                 '';
               };
@@ -47,12 +47,7 @@
               efi.canTouchEfiVariables = true;
             };
 
-            initrd.systemd.tpm2.enable = false;
             kernelParams = [
-              # faster boots, mask this system
-              "systemd.mask=dev-tpm0.device"
-              "systemd.mask=dev-tpmrm0.device"
-
               # minimal startup
               "quiet"
               "splash"
@@ -66,25 +61,10 @@
             initrd.verbose = false;
           };
 
-          systemd.tpm2.enable = false;
-
           nixpkgs.config.allowUnfree = true;
           nixpkgs.config.allowUnfreePredicate = pkg: true;
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-
-          # --- 2TB SHARED DRIVE MOUNT ---
-          fileSystems."/mnt/shared" = {
-            device = "/dev/disk/by-uuid/72925CFC925CC66F";
-            fsType = "ntfs3";
-            options = [
-              "rw"
-              "uid=1000"
-              "gid=100"
-              "dmask=0022"
-              "fmask=0133"
-            ];
-          };
 
           # Enable various user-defined modules
           mySystem = {
@@ -98,7 +78,7 @@
             };
 
             # Hardware-specific modules
-            hardware.nvidia.enable = true;
+            hardware.intel.enable = true;
             hardware.bluetooth.enable = true;
 
             # Enable Apps
