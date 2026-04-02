@@ -40,6 +40,7 @@
 
               monitor = [
                 "Virtual-1,1280x720,auto,1"
+                "eDP-1, preferred,auto,2"
                 ",preferred,auto,1" # Default
               ];
 

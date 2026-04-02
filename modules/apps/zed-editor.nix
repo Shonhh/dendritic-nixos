@@ -17,7 +17,7 @@
       config = lib.mkIf cfg.enable {
 
         home-manager.users.shonh = {
-          stylix.targets.zed.enable = false;
+          stylix.targets.zed.colors.enable = false;
 
           programs.zed-editor = {
             enable = true;
@@ -118,11 +118,11 @@
               icon_theme = "Colored Zed Icons Theme Dark";
 
               buffer_font_family = "${config.stylix.fonts.monospace.name}";
-              buffer_font_size = 15.0;
+              buffer_font_size = lib.mkDefault 15.0;
               theme = "Gruvbox Baby";
 
-              ui_font_family = "Lato";
-              ui_font_size = 15.0;
+              ui_font_family = "${config.stylix.fonts.sansSerif.name}";
+              ui_font_size = lib.mkDefault 15.0;
             };
 
             userTasks = [

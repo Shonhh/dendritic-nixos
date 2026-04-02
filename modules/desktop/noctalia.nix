@@ -322,7 +322,7 @@
               wallpaper = {
                 enabled = true;
                 overviewEnabled = false;
-                directory = "/home/shonh/Pictures/Wallpapers";
+                directory = "/home/shonh/nixos/wallpapers";
                 monitorDirectories = [ ];
                 enableMultiMonitorDirectories = false;
                 showHiddenFiles = false;

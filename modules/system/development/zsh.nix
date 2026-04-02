@@ -40,7 +40,13 @@
               ignoreDups = true; # Don't save duplicate commands to history
               share = true; # Share history across multiple open terminal windows
             };
+
+            initContent = ''
+              fastfetch
+            '';
           };
+
+          home.packages = [ pkgs.fastfetch ];
         };
       };
     };
