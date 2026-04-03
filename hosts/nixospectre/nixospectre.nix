@@ -109,7 +109,10 @@
             desktop = {
               hyprland.enable = true;
               noctalia.enable = true;
-              stylix.enable = true;
+              stylix = {
+                enable = true;
+                wallpaper = inputs.self + "/wallpapers/gruvified-wallpaper2.png";
+              };
               plymouth.enable = true;
             };
           };

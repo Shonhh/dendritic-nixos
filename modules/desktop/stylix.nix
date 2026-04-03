@@ -13,13 +13,21 @@
       cfg = config.mySystem.desktop.stylix;
     in
     {
-      options.mySystem.desktop.stylix.enable = lib.mkEnableOption "Stylix System Theming";
+      options.mySystem.desktop.stylix = {
+        enable = lib.mkEnableOption "Stylix System Theming";
+
+        wallpaper = lib.mkOption {
+          type = lib.types.path;
+          default = inputs.self + "/wallpapers/gruvified-wallpaper.png";
+          description = "Path to the wallpaper image for Stylix and Noctalia.";
+        };
+      };
 
       config = lib.mkIf cfg.enable {
         stylix = {
           enable = true;
 
-          image = inputs.self + "/wallpapers/gruvified-wallpaper.png";
+          image = cfg.wallpaper;
           polarity = "dark";
           base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
 
