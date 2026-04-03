@@ -14,7 +14,7 @@
       spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
     in
     {
-      options.mySystem.apps.spotify.enable = lib.mkEnableOption "Neovim Editor";
+      options.mySystem.apps.spotify.enable = lib.mkEnableOption "Themed Spotify";
 
       config = lib.mkIf cfg.enable {
         home-manager.users.shonh = {
