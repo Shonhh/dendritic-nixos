@@ -21,7 +21,7 @@
           options = "--delete-older-than 14d";
         };
 
-        nix.autoOptimiseStore = true;
+        nix.settings.auto-optimise-store = true;
       };
     };
 }

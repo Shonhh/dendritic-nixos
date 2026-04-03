@@ -51,6 +51,7 @@
         };
 
         home-manager.users.shonh = {
+          gtk.gtk4.theme = null;
           home.sessionVariables = {
             XCURSOR_THEME = config.stylix.cursor.name;
             XCURSOR_SIZE = toString config.stylix.cursor.size;
