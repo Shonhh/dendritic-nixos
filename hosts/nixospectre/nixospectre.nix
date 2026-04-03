@@ -85,7 +85,7 @@
             apps = {
               foot = {
                 enable = true;
-                sizeModifier = -4;
+                sizeModifier = -2;
               };
               yazi.enable = true;
               thunar.enable = true;
