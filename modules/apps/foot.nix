@@ -15,7 +15,14 @@
       fonts = config.stylix.fonts;
     in
     {
-      options.mySystem.apps.foot.enable = lib.mkEnableOption "Foot Terminal Emulator";
+      options.mySystem.apps.foot = {
+        enable = lib.mkEnableOption "Foot Terminal Emulator";
+        sizeModifier = lib.mkOption {
+          type = lib.types.int;
+          default = 0;
+          description = "Adjustment to the default Stylix terminal font size.";
+        };
+      };
 
       config = lib.mkIf cfg.enable {
         environment.systemPackages = [ pkgs.foot ];
@@ -30,7 +37,7 @@
               main = {
                 term = "xterm-256color";
                 dpi-aware = lib.mkForce "yes";
-                font = "${fonts.monospace.name}:size=${toString fonts.sizes.terminal}";
+                font = "${fonts.monospace.name}:size=${toString (fonts.sizes.terminal + cfg.sizeModifier)}";
               };
 
               colors-dark = {

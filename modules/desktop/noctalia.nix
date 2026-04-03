@@ -164,7 +164,7 @@
                       hideIfNotDetected = true;
                       id = "Battery";
                       showNoctaliaPerformance = false;
-                      showPowerProfiles = false;
+                      showPowerProfiles = true;
                     }
                     {
                       displayMode = "onhover";

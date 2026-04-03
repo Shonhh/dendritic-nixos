@@ -83,7 +83,10 @@
 
             # Enable Apps
             apps = {
-              foot.enable = true;
+              foot = {
+                enable = true;
+                sizeModifier = -4;
+              };
               yazi.enable = true;
               thunar.enable = true;
               neovim.enable = true;
