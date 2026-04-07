@@ -22,6 +22,8 @@
 
           programs.nixcord = {
             enable = true;
+            vesktop.enable = true;
+
             quickCss = builtins.readFile ./discord.css;
 
             config = {
@@ -94,6 +96,7 @@
                 validReply.enable = true;
                 validUser.enable = true;
                 volumeBooster.enable = true;
+                webScreenShareFixes.enable = true;
                 youtubeAdblock.enable = true;
               };
             };

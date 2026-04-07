@@ -204,6 +204,10 @@
                 background_color = lib.mkIf config.mySystem.desktop.stylix.enable "rgb(${config.lib.stylix.colors.base00})";
               };
 
+              xwayland = {
+                force_zero_scaling = true;
+              };
+
               # Input
               input = {
                 kb_layout = "us";

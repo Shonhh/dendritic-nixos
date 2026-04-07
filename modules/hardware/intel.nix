@@ -30,13 +30,16 @@
         # Tell X11/Wayland to use the modesetting driver
         services.xserver.videoDrivers = [ "modesetting" ];
 
-        # Inject Wayland variables into UWSM to force NVIDIA hardware acceleration
+        # Inject Wayland variables into UWSM
         home-manager.users.shonh = {
           home.sessionVariables = {
             LIBVA_DRIVER_NAME = "iHD";
             XDG_SESSION_TYPE = "wayland";
-            NIXOS_OZONE_WL = "1";
           };
+        };
+
+        environment.sessionVariables = {
+          NIXOS_OZONE_WL = "1";
         };
       };
     };
