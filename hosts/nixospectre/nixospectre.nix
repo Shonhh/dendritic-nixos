@@ -75,6 +75,7 @@
               development.enable = true;
               polkit.enable = true;
               nixgc.enable = true;
+              rebuild-system.enable = true;
             };
 
             # Hardware-specific modules

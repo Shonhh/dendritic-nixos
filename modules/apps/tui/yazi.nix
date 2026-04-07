@@ -2,48 +2,62 @@
 { ... }:
 
 {
-  flake.nixosModules.yazi = { config, lib, pkgs, ... }:
-  let
-    cfg = config.mySystem.apps.yazi;
-  in {
-    options.mySystem.apps.yazi.enable = lib.mkEnableOption "Yazi File Manager";
+  flake.nixosModules.yazi =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      cfg = config.mySystem.apps.yazi;
+    in
+    {
+      options.mySystem.apps.yazi.enable = lib.mkEnableOption "Yazi File Manager";
 
-    config = lib.mkIf cfg.enable {
+      config = lib.mkIf cfg.enable {
 
-      home-manager.users.shonh = {
+        home-manager.users.shonh = {
 
-        home.packages = [ pkgs.ripdrag ];
+          home.packages = [ pkgs.ripdrag ];
 
-        programs.yazi = {
-          enable = true;
-          enableBashIntegration = true;
-          shellWrapperName = "y";
+          programs.yazi = {
+            enable = true;
+            enableBashIntegration = true;
+            shellWrapperName = "y";
 
-          settings = {
-            opener = {
-              edit = [
-                { run = "nvim \"$@\""; block = true; desc = "Neovim"; }
-              ];
+            settings = {
+              opener = {
+                edit = [
+                  {
+                    run = "nvim \"$@\"";
+                    block = true;
+                    desc = "Neovim";
+                  }
+                ];
+              };
+              open = {
+                prepend_rules = [
+                  {
+                    mime = "text/*";
+                    use = "edit";
+                  }
+                ];
+              };
             };
-            open = {
-              prepend_rules = [
-                { mime = "text/*"; use = "edit"; }
+
+            keymap = {
+              mgr.prepend_keymap = [
+                {
+                  on = [ "<C-n>" ];
+                  run = "shell 'ripdrag \"$@\" -x 2>/dev/null' --confirm --orphan";
+                  desc = "Drag and drop selected files";
+                }
               ];
             };
           };
 
-          keymap = {
-            mgr.prepend_keymap = [
-              {
-                on = [ "<C-n>" ];
-                run = "shell 'ripdrag \"$@\" -x 2>/dev/null' --confirm --orphan";
-                desc = "Drag and drop selected files";
-              }
-            ];
-          };
         };
-
       };
     };
-  };
 }

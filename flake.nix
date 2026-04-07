@@ -49,6 +49,8 @@
       perSystem =
         { pkgs, ... }:
         {
+          formatter = pkgs.nixfmt;
+
           devShells.default = pkgs.mkShell {
             name = "dendritic-dev-shell";
 
