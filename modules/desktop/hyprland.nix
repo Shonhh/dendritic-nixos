@@ -157,6 +157,9 @@
                   new_optimizations = "on";
                   ignore_opacity = "on";
                   xray = false;
+
+                  popups = true;
+                  popups_ignorealpha = 0.2;
                 };
               };
 
