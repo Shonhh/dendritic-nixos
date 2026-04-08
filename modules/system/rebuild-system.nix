@@ -71,7 +71,8 @@
 
             echo "Rebuilding NixOS ($BUILD_ACTION) for host $(hostname)..."
             # Execute the rebuild with Nix Output Monitor
-            sudo nixos-rebuild "$BUILD_ACTION" --flake .#$(hostname) |& nom
+            sudo true
+            sudo nixos-rebuild "$BUILD_ACTION" --flake .#$(hostname) --log-format internal-json |& nom --json
 
             # Post-build actions for switch/update
             if [ "$BUILD_ACTION" == "switch" ]; then
