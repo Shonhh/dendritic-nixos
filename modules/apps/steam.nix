@@ -1,7 +1,7 @@
 { ... }:
 
 {
-  flake.nixosModules.neovim =
+  flake.nixosModules.steam =
     {
       config,
       lib,
@@ -27,7 +27,7 @@
 
           gamescope = {
             enable = true;
-            capSysNice = false; # doesn't work with UWSM
+            capSysNice = true;
           };
 
           gamemode = {
@@ -42,13 +42,7 @@
 
           (writeShellScriptBin "steam-console" ''
             hyprctl dispatch workspace 10
-            uwsm-app -- gamemoderun gamescope \
-              -w 1920 -h 1080 -W 1920 -H 1080 -r 200 \
-              -e -f \
-              --xwayland-count 2 \
-              --hdr-enabled --hdr-itm-enabled \
-              --force-grab-cursor \
-              -- sh -c 'unset LD_PRELOAD; steam -noverifyfiles -gamepadui'
+            gamemoderun sh -c 'unset LD_PRELOAD; steam -noverifyfiles -gamepadui'
           '')
         ];
       };

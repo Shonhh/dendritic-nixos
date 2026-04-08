@@ -41,18 +41,12 @@
           package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
         };
 
-        # 4. Inject Wayland variables into UWSM to force NVIDIA hardware acceleration
-        home-manager.users.shonh = {
-          home.sessionVariables = {
-            LIBVA_DRIVER_NAME = "nvidia";
-            XDG_SESSION_TYPE = "wayland";
-            __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-            NVD_BACKEND = "direct"; # Fixes graphical glitches in Electron/Chromium apps
-          };
-        };
-
         environment.sessionVariables = {
           NIXOS_OZONE_WL = "1";
+          LIBVA_DRIVER_NAME = "nvidia";
+          XDG_SESSION_TYPE = "wayland";
+          __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+          NVD_BACKEND = "direct"; # Fixes graphical glitches in Electron/Chromium apps
         };
       };
     };

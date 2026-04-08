@@ -64,14 +64,14 @@
             git add .
 
             echo "Formatting Nix files..."
-            git ls-files '*.nix' | xargs nixfmt
+            git ls-files '*.nix' | xargs ${pkgs.nixfmt}/bin/nixfmt
 
             echo "Staging formatting changes..."
             git add .
 
             echo "Rebuilding NixOS ($BUILD_ACTION) for host $(hostname)..."
             # Execute the rebuild with Nix Output Monitor
-            sudo true
+            sudo -v
             sudo nixos-rebuild "$BUILD_ACTION" --flake .#$(hostname) --log-format internal-json |& nom --json
 
             # Post-build actions for switch/update
