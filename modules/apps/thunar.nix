@@ -24,8 +24,11 @@
           ];
         };
 
-        services.gvfs.enable = true; # Enables Trash, USB mounting, and network drives
-        services.tumbler.enable = true; # Enables image and video thumbnails
+        services = {
+          gvfs.enable = true; # Enables Trash, USB mounting, and network drives
+          tumbler.enable = true; # Enables image and video thumbnails
+          udisks2.enable = true; # Enables automounting
+        };
 
         # Thunar's archive plugin needs an actual archiving tool to execute the commands
         environment.systemPackages = with pkgs; [

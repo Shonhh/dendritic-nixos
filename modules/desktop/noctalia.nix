@@ -38,6 +38,24 @@
         home-manager.users.shonh = {
           imports = [ inputs.noctalia.homeModules.default ];
 
+          systemd.user.services.noctalia-shell = {
+            Unit = {
+              Description = "Noctalia Shell Desktop Environment";
+              PartOf = [ "graphical-session.target" ];
+              After = [ "graphical-session.target" ];
+            };
+            Service = {
+              Type = "simple";
+              # Tell UWSM to manage this app inside the systemd scope
+              ExecStart = "${pkgs.uwsm}/bin/uwsm app -- noctalia-shell";
+              Restart = "always";
+              RestartSec = 2;
+            };
+            Install = {
+              WantedBy = [ "graphical-session.target" ];
+            };
+          };
+
           # enable and customize noctalia
           programs.noctalia-shell = {
             enable = true;
@@ -708,6 +726,8 @@
             grim
             imagemagick
             wl-clipboard
+            cliphist
+            pwvucontrol
           ];
         };
       };

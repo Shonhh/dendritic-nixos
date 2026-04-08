@@ -28,6 +28,12 @@
           withUWSM = true;
         };
 
+        xdg.portal = {
+          enable = true;
+          extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+          config.common.default = "*";
+        };
+
         # --- User Level Setup
         home-manager.users.shonh = {
           wayland.windowManager.hyprland = {
@@ -41,9 +47,9 @@
               "$code_editor" = "zeditor";
               "$mod" = "SUPER";
 
-              "exec-once" = [
-                "uwsm-app -- noctalia-shell"
-              ];
+              # "exec-once" = [
+              #   "uwsm-app -- noctalia-shell"
+              # ];
 
               monitor = [
                 "Virtual-1,1280x720,auto,1"

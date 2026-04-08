@@ -49,6 +49,11 @@
               package = pkgs.lato;
               name = "Lato";
             };
+
+            emoji = {
+              package = pkgs.noto-fonts-color-emoji;
+              name = "Noto Color Emoji";
+            };
           };
 
           icons = {
