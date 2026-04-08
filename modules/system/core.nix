@@ -22,9 +22,11 @@
             "nix-command"
             "flakes"
           ];
+
           download-buffer-size = 536870912; # 512 MB
-          cores = 2;
-          max-jobs = 1;
+
+          cores = 0; # use all available logical cores
+          max-jobs = "auto";
         };
 
         # --- Kernel ---
@@ -58,14 +60,25 @@
         };
 
         # --- Services (Printing & Audio) ---
-        services.printing.enable = true;
-        services.pulseaudio.enable = false;
+        services = {
+          printing.enable = true;
+          pulseaudio.enable = false;
+          pipewire = {
+            enable = true;
+            alsa.enable = true;
+            alsa.support32Bit = true;
+            pulse.enable = true;
+          };
+
+          fstrim.enable = true;
+        };
+
         security.rtkit.enable = true;
-        services.pipewire = {
+
+        # --- ZRAM (Swap Replacement) ---
+        zramSwap = {
           enable = true;
-          alsa.enable = true;
-          alsa.support32Bit = true;
-          pulse.enable = true;
+          memoryPercent = 50;
         };
 
         # --- User Account ---

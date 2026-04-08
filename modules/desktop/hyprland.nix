@@ -57,6 +57,10 @@
                 ",preferred,auto,1" # Default
               ];
 
+              render = {
+                direct_scanout = 2;
+              };
+
               bind = [
                 # Applications
                 "$mod, T, exec, uwsm-app -- $terminal"
