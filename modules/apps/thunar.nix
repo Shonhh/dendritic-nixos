@@ -30,6 +30,14 @@
           udisks2.enable = true; # Enables automounting
         };
 
+        home-manager.users.shonh = {
+          services.udiskie = {
+            enable = true;
+            notify = true;
+            tray = "auto";
+          };
+        };
+
         # Thunar's archive plugin needs an actual archiving tool to execute the commands
         environment.systemPackages = with pkgs; [
           file-roller

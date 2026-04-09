@@ -215,6 +215,8 @@
                 disable_splash_rendering = true;
                 disable_hyprland_logo = true;
                 background_color = lib.mkIf config.mySystem.desktop.stylix.enable "rgb(${config.lib.stylix.colors.base00})";
+
+                vrr = 2;
               };
 
               xwayland = {

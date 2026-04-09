@@ -43,7 +43,7 @@
                 '';
               };
 
-              timeout = 5;
+              timeout = 1;
               efi.canTouchEfiVariables = true;
             };
 
