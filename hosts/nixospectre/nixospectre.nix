@@ -99,6 +99,7 @@
               spotify.enable = true;
               btop.enable = true;
               obsidian.enable = true;
+              anki.enable = true;
               zoom = {
                 enable = true;
                 scaleFactor = 2;
