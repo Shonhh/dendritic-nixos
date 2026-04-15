@@ -104,6 +104,7 @@
                 enable = true;
                 scaleFactor = 2;
               };
+              thunderbird.enable = true;
             };
 
             games = {

@@ -117,6 +117,8 @@
               btop.enable = true;
               obsidian.enable = true;
               zoom.enable = true;
+              anki.enable = true;
+              thunderbird.enable = true;
             };
 
             games = {
