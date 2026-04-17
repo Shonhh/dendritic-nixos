@@ -119,6 +119,7 @@
               zoom.enable = true;
               anki.enable = true;
               thunderbird.enable = true;
+              helium.enable = true;
             };
 
             games = {
@@ -130,7 +131,10 @@
             desktop = {
               hyprland.enable = true;
               noctalia.enable = true;
-              stylix.enable = true;
+              stylix = {
+                enable = true;
+                wallpaper = inputs.self + "/wallpapers/gruvified-wallpaper3.png";
+              };
               plymouth.enable = true;
             };
           };

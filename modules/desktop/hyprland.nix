@@ -42,7 +42,7 @@
 
             settings = {
               "$terminal" = "foot";
-              "$browser" = "vivaldi";
+              "$browser" = "helium";
               "$file-manager" = "thunar";
               "$code_editor" = "zeditor";
               "$mod" = "SUPER";

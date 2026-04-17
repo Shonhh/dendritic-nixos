@@ -100,7 +100,7 @@
             home.sessionVariables = {
               TERMINAL = "foot";
               EDITOR = "nvim";
-              BROWSER = "vivaldi";
+              BROWSER = "helium";
             };
 
             home.stateVersion = "25.11";

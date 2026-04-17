@@ -105,6 +105,7 @@
                 scaleFactor = 2;
               };
               thunderbird.enable = true;
+              helium.enable = true;
             };
 
             games = {
