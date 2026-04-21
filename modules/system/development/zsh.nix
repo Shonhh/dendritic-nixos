@@ -44,6 +44,10 @@
             initContent = ''
               fastfetch
             '';
+
+            shellAliases = {
+              # bat, zoxide, eza, etc
+            };
           };
 
           home.packages = [ pkgs.fastfetch ];
