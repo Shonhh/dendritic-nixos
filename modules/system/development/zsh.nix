@@ -46,7 +46,7 @@
             '';
 
             shellAliases = {
-              # bat, zoxide, eza, etc
+              # bat, zoxide, eza, ripgrep, fzf, etc
             };
           };
 

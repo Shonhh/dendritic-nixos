@@ -728,6 +728,7 @@
             wl-clipboard
             cliphist
             pwvucontrol
+            hyprshot
           ];
         };
       };
