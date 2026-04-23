@@ -83,6 +83,11 @@
               "gid=100"
               "dmask=0022"
               "fmask=0133"
+
+              # Drive mounts when needed, not when booting
+              "noauto"
+              "x-systemd.automount"
+              "x-systemd.idle-timeout=600"
             ];
           };
 

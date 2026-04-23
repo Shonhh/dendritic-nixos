@@ -24,7 +24,7 @@
             enable = true;
             vesktop.enable = true;
 
-            quickCss = builtins.readFile ./discord.css;
+            # quickCss = builtins.readFile ./discord.css;
 
             config = {
               disableMinSize = true;
