@@ -59,6 +59,8 @@
               "boot.shell_on_fail"
               "udev.log_priority=3"
               "rd.systemd.show_status=auto"
+              "usbcore.autosuspend=-1"
+              "processor.max_cstate=5"
             ];
 
             # minimal startup
@@ -125,6 +127,7 @@
               anki.enable = true;
               thunderbird.enable = true;
               helium.enable = true;
+              ryubing.enable = true;
             };
 
             games = {

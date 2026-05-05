@@ -28,6 +28,7 @@
 
         # 2. Tell X11/Wayland to use the Nvidia driver
         services.xserver.videoDrivers = [ "nvidia" ];
+        services.udev.packages = [ pkgs.game-devices-udev-rules ];
 
         # 3. Configure the Nvidia package
         hardware.nvidia = {
