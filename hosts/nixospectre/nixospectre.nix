@@ -79,8 +79,11 @@
             };
 
             # Hardware-specific modules
-            hardware.intel.enable = true;
-            hardware.bluetooth.enable = true;
+            hardware = {
+              intel.enable = true;
+              bluetooth.enable = true;
+              screen-rotation.enable = true;
+            };
 
             # Enable Apps
             apps = {
