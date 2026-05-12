@@ -137,7 +137,10 @@
 
             # Define Environment
             desktop = {
+              wm-ctrl.enable = true;
               hyprland.enable = true;
+              niri.enable = true;
+              swayfx.enable = true;
               noctalia.enable = true;
               stylix = {
                 enable = true;

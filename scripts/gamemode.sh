@@ -1,16 +1,22 @@
 #!/usr/bin/env sh
-HYPRGAMEMODE=$(hyprctl getoption animations:enabled | awk 'NR==1{print $2}')
-if [ "$HYPRGAMEMODE" = 1 ] ; then
-	hyprctl --batch "\
-		keyword animations:enabled 0;\
-		keyword decoration:shadow:enabled 0;\
-		keyword decoration:blur:enabled 0;\
-		keyword general:gaps_in 0;\
-		keyword general:gaps_out 0;\
-		keyword general:border_size 1;\
-		keyword decoration:rounding 0"
-        noctalia-shell ipc call powerProfile enableNoctaliaPerformance
-	exit
+
+# 1. Path to a temporary flag file to track our toggle state
+FLAG="/tmp/gamemode_active"
+
+# 2. Tell Noctalia to flip the hardware performance switch
+noctalia-shell ipc call powerProfile toggleNoctaliaPerformance
+
+# 3. Handle the Tiling Aesthetics (Gaps/Blur/Rounding)
+if [ ! -f "$FLAG" ]; then
+    # Entering Game Mode
+    touch "$FLAG"
+    noctalia-shell ipc call powerProfile enableNoctaliaPerformance
+    wm-ctrl gaps_off
+    notify-send -u critical "Game Mode" "Performance Enabled. UI Bloat Cleared."
+else
+    # Leaving Game Mode
+    rm "$FLAG"
+    noctalia-shell ipc call powerProfile disableNoctaliaPerformance
+    wm-ctrl reload
+    notify-send "Game Mode" "Balanced Restored. Aesthetics Enabled."
 fi
-hyprctl reload
-noctalia-shell ipc call powerProfile disableNoctaliaPerformance

@@ -41,7 +41,7 @@
           protonup-qt
 
           (writeShellScriptBin "steam-console" ''
-            hyprctl dispatch workspace 10
+            wm-ctrl workspace 10
             gamemoderun sh -c 'unset LD_PRELOAD; steam -noverifyfiles -gamepadui'
           '')
         ];

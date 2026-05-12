@@ -47,10 +47,31 @@
 
             shellAliases = {
               # bat, zoxide, eza, ripgrep, fzf, etc
+              cat = lib.getExe pkgs.bat;
+              ls = lib.getExe pkgs.eza;
+              grep = lib.getExe pkgs.ripgrep;
+              rg = lib.getExe pkgs.ripgrep;
+              find = lib.getExe pkgs.fd;
+              du = lib.getExe pkgs.dust;
             };
           };
 
-          home.packages = [ pkgs.fastfetch ];
+          programs.zoxide = {
+            enable = true;
+            enableZshIntegration = true;
+            options = [ "--cmd cd" ];
+          };
+
+          programs.fzf = {
+            enable = true;
+            enableZshIntegration = true;
+          };
+
+          home.packages = with pkgs; [
+            fastfetch
+            tldr
+            delta
+          ];
         };
       };
     };

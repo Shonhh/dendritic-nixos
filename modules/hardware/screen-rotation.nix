@@ -16,26 +16,47 @@
 
       config = lib.mkIf cfg.enable {
         hardware.sensor.iio.enable = true;
-        environment.systemPackages = [ pkgs.iio-hyprland ];
 
-        systemd.user.services.iio-hyprland = {
-          description = "IIO Sensor Bridge for Hyprland Auto-Rotation";
+        # Install both tools globally
+        environment.systemPackages = with pkgs; [
+          iio-hyprland
+          rot8
+        ];
 
-          partOf = [ "graphical-session.target" ];
-          after = [ "graphical-session.target" ];
-          wantedBy = [ "graphical-session.target" ];
+        home-manager.users.shonh = {
+          # Service 1: Only runs if Hyprland is active
+          systemd.user.services.iio-hyprland = {
+            Unit = {
+              Description = "IIO Sensor Bridge for Hyprland";
+              PartOf = [ "graphical-session.target" ];
+              After = [ "graphical-session.target" ];
+              # SYSTEMD MAGIC: Only start if this variable exists in the session
+              ConditionEnvironment = "HYPRLAND_INSTANCE_SIGNATURE";
+            };
+            Service = {
+              Type = "simple";
+              ExecStart = "${pkgs.uwsm}/bin/uwsm app -- ${pkgs.iio-hyprland}/bin/iio-hyprland eDP-1";
+              Restart = "always";
+              RestartSec = 2;
+            };
+            Install.WantedBy = [ "graphical-session.target" ];
+          };
 
-          path = with pkgs; [
-            jq
-            hyprland
-          ];
-
-          # The Service block becomes serviceConfig
-          serviceConfig = {
-            Type = "simple";
-            ExecStart = "${pkgs.uwsm}/bin/uwsm app -- ${pkgs.iio-hyprland}/bin/iio-hyprland eDP-1";
-            Restart = "always";
-            RestartSec = 2;
+          # Service 2: Only runs if Niri is active
+          systemd.user.services.rot8-niri = {
+            Unit = {
+              Description = "Automatic Screen Rotation for Niri";
+              PartOf = [ "graphical-session.target" ];
+              After = [ "graphical-session.target" ];
+              ConditionEnvironment = "NIRI_SOCKET";
+            };
+            Service = {
+              Type = "simple";
+              ExecStart = "${pkgs.uwsm}/bin/uwsm app -- ${pkgs.rot8}/bin/rot8";
+              Restart = "always";
+              RestartSec = 2;
+            };
+            Install.WantedBy = [ "graphical-session.target" ];
           };
         };
       };
