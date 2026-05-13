@@ -12,11 +12,9 @@ if [ ! -f "$FLAG" ]; then
     touch "$FLAG"
     noctalia-shell ipc call powerProfile enableNoctaliaPerformance
     wm-ctrl gaps_off
-    notify-send -u critical "Game Mode" "Performance Enabled. UI Bloat Cleared."
 else
     # Leaving Game Mode
     rm "$FLAG"
     noctalia-shell ipc call powerProfile disableNoctaliaPerformance
     wm-ctrl reload
-    notify-send "Game Mode" "Balanced Restored. Aesthetics Enabled."
 fi
