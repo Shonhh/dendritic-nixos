@@ -1,7 +1,7 @@
 { inputs, config, ... }:
 
 {
-  flake.nixosConfigurations."omenixos" = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations."billy" = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = { inherit inputs; };
 
@@ -16,7 +16,7 @@
       (
         { lib, config, ... }:
         {
-          networking.hostName = "omenixos";
+          networking.hostName = "Billy";
           system.stateVersion = "25.11";
 
           # disable stylix limine theming
@@ -38,7 +38,7 @@
                 extraEntries = ''
                   /Windows 11
                       protocol: efi
-                      path: uuid(e6d3d16d-54ea-41e5-88fb-ef2040284a01):/EFI/Microsoft/Boot/bootmgfw.efi
+                      path: uuid(ab3d6301-a2e4-4db3-9c91-eefc427f3f34):/EFI/Microsoft/Boot/bootmgfw.efi
                       comment: Boot into Windows 11
                 '';
               };
@@ -47,7 +47,6 @@
               efi.canTouchEfiVariables = true;
             };
 
-            initrd.systemd.tpm2.enable = false;
             kernelParams = [
               # faster boots, mask this system
               "systemd.mask=dev-tpm0.device"
@@ -59,6 +58,8 @@
               "boot.shell_on_fail"
               "udev.log_priority=3"
               "rd.systemd.show_status=auto"
+
+	      # stop usbs from dcing
               "usbcore.autosuspend=-1"
               "processor.max_cstate=5"
             ];
@@ -68,8 +69,6 @@
             initrd.verbose = false;
           };
 
-          systemd.tpm2.enable = false;
-
           nixpkgs.config.allowUnfree = true;
           nixpkgs.config.allowUnfreePredicate = pkg: true;
           home-manager.useGlobalPkgs = true;
@@ -77,7 +76,7 @@
 
           # --- 2TB SHARED DRIVE MOUNT ---
           fileSystems."/mnt/shared" = {
-            device = "/dev/disk/by-uuid/72925CFC925CC66F";
+            device = "/dev/disk/by-uuid/3D1BD58875712A30";
             fsType = "ntfs3";
             options = [
               "rw"
@@ -107,9 +106,16 @@
 
             # Hardware-specific modules
             hardware.nvidia = {
-	      enable = true;
-	      package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+	    	enable = true;
+
+		prime = {
+		  enable = true;
+		  alwaysOn = true;
+		  intelBusId = "PCI:0:2:0";
+		  nvidiaBusId = "PCI:1:0:0";
+		};
 	    };
+
             hardware.bluetooth.enable = true;
 
             # Enable Apps

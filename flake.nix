@@ -77,6 +77,7 @@
         ./hosts/nixovm/nixovm.nix # Explicitly loads your grouped host
         ./hosts/omenixos/omenixos.nix
         ./hosts/nixospectre/nixospectre.nix
+	./hosts/billy/billy.nix
       ];
     };
 }
