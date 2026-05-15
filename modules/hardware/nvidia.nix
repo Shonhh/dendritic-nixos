@@ -14,7 +14,7 @@
     {
       options.mySystem.hardware.nvidia = {
         enable = lib.mkEnableOption "NVIDIA Drivers and Wayland Fixes";
-        
+
         package = lib.mkOption {
           type = lib.types.package;
           default = config.boot.kernelPackages.nvidiaPackages.stable;
@@ -23,12 +23,21 @@
 
         prime = {
           enable = lib.mkEnableOption "NVIDIA Optimus PRIME (Hybrid Graphics)";
-          
+
           alwaysOn = lib.mkEnableOption "Force Sync Mode (Run everything on the dGPU)";
-          
-          intelBusId = lib.mkOption { type = lib.types.str; default = ""; };
-          amdgpuBusId = lib.mkOption { type = lib.types.str; default = ""; };
-          nvidiaBusId = lib.mkOption { type = lib.types.str; default = ""; };
+
+          intelBusId = lib.mkOption {
+            type = lib.types.str;
+            default = "";
+          };
+          amdgpuBusId = lib.mkOption {
+            type = lib.types.str;
+            default = "";
+          };
+          nvidiaBusId = lib.mkOption {
+            type = lib.types.str;
+            default = "";
+          };
         };
       };
 
@@ -45,10 +54,10 @@
 
         hardware.nvidia = {
           modesetting.enable = true;
-          
+
           # Only use finegrained power management if we are actually trying to save battery in offload mode
           powerManagement.enable = true;
-          powerManagement.finegrained = cfg.prime.enable && !cfg.prime.alwaysOn; 
+          powerManagement.finegrained = cfg.prime.enable && !cfg.prime.alwaysOn;
 
           open = false;
           nvidiaSettings = true;
@@ -59,12 +68,12 @@
             # If alwaysOn is FALSE, we use Offload (Battery Saver)
             offload = lib.mkIf (!cfg.prime.alwaysOn) {
               enable = true;
-              enableOffloadCmd = true; 
+              enableOffloadCmd = true;
             };
-            
+
             # If alwaysOn is TRUE, we use Sync (Maximum Performance)
             sync.enable = cfg.prime.alwaysOn;
-            
+
             intelBusId = lib.mkIf (cfg.prime.intelBusId != "") cfg.prime.intelBusId;
             amdgpuBusId = lib.mkIf (cfg.prime.amdgpuBusId != "") cfg.prime.amdgpuBusId;
             nvidiaBusId = cfg.prime.nvidiaBusId;
@@ -78,10 +87,10 @@
           __GLX_VENDOR_LIBRARY_NAME = "nvidia";
           NVD_BACKEND = "direct";
         };
-        
+
         # Only install the offload script if we are actually using offload mode
-        environment.systemPackages = lib.mkIf (cfg.prime.enable && !cfg.prime.alwaysOn) [ 
-          pkgs.nvtopPackages.nvidia 
+        environment.systemPackages = lib.mkIf (cfg.prime.enable && !cfg.prime.alwaysOn) [
+          pkgs.nvtopPackages.nvidia
         ];
       };
     };

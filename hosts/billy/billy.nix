@@ -16,7 +16,7 @@
       (
         { lib, config, ... }:
         {
-          networking.hostName = "Billy";
+          networking.hostName = "billy";
           system.stateVersion = "25.11";
 
           # disable stylix limine theming
@@ -59,7 +59,7 @@
               "udev.log_priority=3"
               "rd.systemd.show_status=auto"
 
-	      # stop usbs from dcing
+              # stop usbs from dcing
               "usbcore.autosuspend=-1"
               "processor.max_cstate=5"
             ];
@@ -74,7 +74,7 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
 
-          # --- 2TB SHARED DRIVE MOUNT ---
+          # --- 1TB SHARED DRIVE MOUNT ---
           fileSystems."/mnt/shared" = {
             device = "/dev/disk/by-uuid/3D1BD58875712A30";
             fsType = "ntfs3";
@@ -83,7 +83,7 @@
               "uid=1000"
               "gid=100"
               "dmask=0022"
-              "fmask=0133"
+              "fmask=0022"
 
               # Drive mounts when needed, not when booting
               "noauto"
@@ -106,15 +106,15 @@
 
             # Hardware-specific modules
             hardware.nvidia = {
-	    	enable = true;
+              enable = true;
 
-		prime = {
-		  enable = true;
-		  alwaysOn = true;
-		  intelBusId = "PCI:0:2:0";
-		  nvidiaBusId = "PCI:1:0:0";
-		};
-	    };
+              prime = {
+                enable = true;
+                alwaysOn = true;
+                intelBusId = "PCI:0:2:0";
+                nvidiaBusId = "PCI:1:0:0";
+              };
+            };
 
             hardware.bluetooth.enable = true;
 
@@ -148,8 +148,6 @@
             desktop = {
               wm-ctrl.enable = true;
               hyprland.enable = true;
-              niri.enable = true;
-              swayfx.enable = true;
               noctalia.enable = true;
               stylix = {
                 enable = true;

@@ -107,9 +107,9 @@
 
             # Hardware-specific modules
             hardware.nvidia = {
-	      enable = true;
-	      package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
-	    };
+              enable = true;
+              package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+            };
             hardware.bluetooth.enable = true;
 
             # Enable Apps

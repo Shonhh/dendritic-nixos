@@ -12,7 +12,15 @@
       cfg = config.mySystem.desktop.hyprland;
     in
     {
-      options.mySystem.desktop.hyprland.enable = lib.mkEnableOption "Hyprland Wayland Compositor";
+      options.mySystem.desktop.hyprland = {
+        enable = lib.mkEnableOption "Hyprland Wayland Compositor";
+
+        monitorScale = lib.mkOption {
+          type = lib.types.str;
+          default = "1"; # Standard 1080p default
+          description = "The Wayland fractional scaling factor for the primary display.";
+        };
+      };
 
       config = lib.mkIf cfg.enable {
         # Skip local compilation
@@ -53,7 +61,7 @@
 
               monitor = [
                 "Virtual-1,1280x720,auto,1"
-                "eDP-1,preferred,auto,2"
+                "eDP-1,preferred,auto,${cfg.monitorScale}"
                 ",preferred,auto,1" # Default
               ];
 

@@ -118,7 +118,10 @@
 
             # Define Environment
             desktop = {
-              hyprland.enable = true;
+              hyprland = {
+                enable = true;
+                monitorScale = "2";
+              };
               noctalia.enable = true;
               stylix = {
                 enable = true;
