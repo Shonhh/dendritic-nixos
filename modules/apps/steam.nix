@@ -36,14 +36,20 @@
           };
         };
 
-        environment.systemPackages = with pkgs; [
+        home-manager.users.shonh.home.packages = with pkgs; [
           mangohud
           protonup-qt
 
           (writeShellScriptBin "steam-console" ''
-            wm-ctrl workspace 10
-            gamemoderun sh -c 'unset LD_PRELOAD; steam -noverifyfiles -gamepadui'
+            uwsm-app -- gamemoderun sh -c 'unset LD_PRELOAD; steam -noverifyfiles -gamepadui'
           '')
+
+          olympus
+        ];
+
+        # Olympus Dependency
+        programs.nix-ld.libraries = with pkgs; [
+          stdenv.cc.cc.lib
         ];
       };
     };

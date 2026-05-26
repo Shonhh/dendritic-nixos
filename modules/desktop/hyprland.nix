@@ -79,7 +79,7 @@
 
                 "$mod, D, workspace, name:discord"
                 "$mod, S, workspace, name:spotify"
-                "$mod, G, exec, hyprctl dispatch workspace 10 && uwsm-app -- steam"
+                "$mod, G, exec, uwsm-app -- steam"
                 "$mod+Shift, G, exec, steam-console"
 
                 # Desktop Keybinds
