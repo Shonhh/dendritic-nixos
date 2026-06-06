@@ -52,12 +52,15 @@
               "quiet"
               "splash"
               "boot.shell_on_fail"
+              "loglevel=3"
               "udev.log_priority=3"
-              "rd.systemd.show_status=auto"
+              "rd.udev.log_level=3"
+              "rd.systemd.show_status=false"
+              "vt.global_cursor_default=0"
             ];
 
             # minimal startup
-            consoleLogLevel = 3;
+            consoleLogLevel = 0;
             initrd.verbose = false;
           };
 

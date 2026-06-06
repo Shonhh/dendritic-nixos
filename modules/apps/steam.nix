@@ -27,7 +27,7 @@
 
           gamescope = {
             enable = true;
-            capSysNice = true;
+            capSysNice = false; # broken last I checked
           };
 
           gamemode = {
@@ -48,6 +48,7 @@
         ];
 
         # Olympus Dependency
+        programs.nix-ld.enable = true;
         programs.nix-ld.libraries = with pkgs; [
           stdenv.cc.cc.lib
         ];

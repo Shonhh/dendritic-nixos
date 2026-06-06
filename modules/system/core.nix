@@ -53,7 +53,7 @@
 
         # --- X11 & Login Manager ---
         services.xserver.enable = true;
-        mySystem.system.tuigreet.enable = true;
+        mySystem.system.regreet.enable = true;
         services.xserver.xkb = {
           layout = "us";
           variant = "";
@@ -113,7 +113,6 @@
           sl
           cmatrix
           cbonsai
-          vivaldi
           wget
           unzip
           vlc

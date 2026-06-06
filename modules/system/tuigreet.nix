@@ -1,7 +1,7 @@
 { ... }:
 
 {
-  flake.nixosModules.login-manager =
+  flake.nixosModules.tuigreet =
     {
       config,
       lib,

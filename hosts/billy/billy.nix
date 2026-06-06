@@ -56,8 +56,11 @@
               "quiet"
               "splash"
               "boot.shell_on_fail"
+              "loglevel=3"
               "udev.log_priority=3"
-              "rd.systemd.show_status=auto"
+              "rd.udev.log_level=3"
+              "rd.systemd.show_status=false"
+              "vt.global_cursor_default=0"
 
               # stop usbs from dcing
               "usbcore.autosuspend=-1"
@@ -65,7 +68,7 @@
             ];
 
             # minimal startup
-            consoleLogLevel = 3;
+            consoleLogLevel = 0;
             initrd.verbose = false;
           };
 
@@ -131,17 +134,16 @@
               steam.enable = true;
               spotify.enable = true;
               btop.enable = true;
-              obsidian.enable = true;
-              zoom.enable = true;
+              # obsidian.enable = true;
+              # zoom.enable = true;
               anki.enable = true;
-              thunderbird.enable = true;
+              # thunderbird.enable = true;
               helium.enable = true;
               ryubing.enable = true;
             };
 
             games = {
               minecraft.enable = true;
-              mindustry.enable = true;
             };
 
             # Define Environment
