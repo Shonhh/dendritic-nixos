@@ -23,6 +23,7 @@
               temurin-jre-bin-21
             ];
           })
+          zenity
         ];
       };
     };

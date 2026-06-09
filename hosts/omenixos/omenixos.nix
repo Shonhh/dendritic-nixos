@@ -135,6 +135,7 @@
               thunderbird.enable = true;
               helium.enable = true;
               ryubing.enable = true;
+              obs-studio.enable = true;
             };
 
             games = {
