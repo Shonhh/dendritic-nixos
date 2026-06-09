@@ -52,6 +52,7 @@
         services.xserver.videoDrivers = [ "nvidia" ];
         services.udev.packages = [ pkgs.game-devices-udev-rules ];
 
+        hardware.nvidia-container-toolkit.enable = true;
         hardware.nvidia = {
           modesetting.enable = true;
 

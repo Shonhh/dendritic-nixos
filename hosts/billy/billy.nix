@@ -139,6 +139,7 @@
               anki.enable = true;
               # thunderbird.enable = true;
               helium.enable = true;
+              odysseus.enable = true;
               ryubing.enable = true;
             };
 

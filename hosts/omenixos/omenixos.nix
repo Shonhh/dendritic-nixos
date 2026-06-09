@@ -104,6 +104,7 @@
               core.enable = true;
               flatpak.enable = true;
               development.enable = true;
+              docker.enable = true;
               polkit.enable = true;
               nixgc.enable = true;
               rebuild-system.enable = true;
@@ -135,6 +136,7 @@
               thunderbird.enable = true;
               helium.enable = true;
               ryubing.enable = true;
+              odysseus.enable = true;
               obs-studio.enable = true;
             };
 
@@ -147,8 +149,8 @@
             desktop = {
               wm-ctrl.enable = true;
               hyprland.enable = true;
-              niri.enable = true;
-              swayfx.enable = true;
+              niri.enable = false;
+              swayfx.enable = false;
               noctalia.enable = true;
               stylix = {
                 enable = true;

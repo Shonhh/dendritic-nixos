@@ -89,6 +89,7 @@
             "networkmanager"
             "wheel"
             "i2c"
+            "docker"
           ];
         };
 
