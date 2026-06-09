@@ -23,6 +23,8 @@
       };
 
       config = lib.mkIf cfg.enable {
+        mySystem.system.docker.enable = true;
+
         home-manager.users.shonh = {
           home.packages = [
             # 1. The Hardware-Agnostic Launcher Script
