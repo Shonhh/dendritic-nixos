@@ -105,6 +105,9 @@
               polkit.enable = true;
               nixgc.enable = true;
               rebuild-system.enable = true;
+              docker = {
+                storeExternal = true;
+              };
             };
 
             # Hardware-specific modules

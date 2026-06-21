@@ -121,6 +121,7 @@
 
             # Define Environment
             desktop = {
+              wm-ctrl.enable = true;
               hyprland = {
                 enable = true;
                 monitorScale = "2";
