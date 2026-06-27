@@ -105,9 +105,6 @@
               polkit.enable = true;
               nixgc.enable = true;
               rebuild-system.enable = true;
-              docker = {
-                storeExternal = true;
-              };
             };
 
             # Hardware-specific modules
@@ -139,11 +136,10 @@
               btop.enable = true;
               # obsidian.enable = true;
               # zoom.enable = true;
-              anki.enable = true;
-              # thunderbird.enable = true;
+              thunderbird.enable = true;
               helium.enable = true;
-              odysseus.enable = true;
               ryubing.enable = true;
+              dolphin-emu.enable = true;
             };
 
             games = {

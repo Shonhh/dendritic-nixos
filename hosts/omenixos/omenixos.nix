@@ -138,6 +138,7 @@
               ryubing.enable = true;
               odysseus.enable = true;
               obs-studio.enable = true;
+              dolphin-emu.enable = true;
             };
 
             games = {
