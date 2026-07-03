@@ -58,7 +58,7 @@
                 fixImagesQuality.enable = true;
                 fixSpotifyEmbeds.enable = true;
                 fixYoutubeEmbeds.enable = true;
-                friendsSince.enable = true;
+                # friendsSince.enable = true;
                 fullSearchContext.enable = true;
                 gameActivityToggle.enable = true;
                 imageZoom.enable = true;

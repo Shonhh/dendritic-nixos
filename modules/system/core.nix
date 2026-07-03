@@ -121,6 +121,10 @@
           efibootmgr
         ];
 
+        nixpkgs.config.permittedInsecurePackages = [
+          "pnpm-10.29.2"
+        ];
+
         # --- Default Applications ---
         # xdg.mimeApps = {
         #   enable = true;
