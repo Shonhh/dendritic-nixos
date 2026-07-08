@@ -1,0 +1,29 @@
+{
+  "change_serial": 10,
+  "entries": [
+    {
+      "active": false,
+      "close_reason": "expired",
+      "event_serial": 2,
+      "notification": {
+        "actions": [],
+        "app_name": "notify-send",
+        "body": "System successfully updated to a new generation!",
+        "category": null,
+        "desktop_entry": null,
+        "expiry_wall_ms": 1783501144600,
+        "icon": null,
+        "id": 1,
+        "image_data": null,
+        "origin": "external",
+        "received_wall_ms": 1783501138600,
+        "summary": "NixOS Rebuild",
+        "timeout": 6000,
+        "urgency": "normal"
+      },
+      "seen": true
+    }
+  ],
+  "next_id": 6,
+  "version": 2
+}

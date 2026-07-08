@@ -86,12 +86,12 @@
                 # Desktop Keybinds
                 "$mod, Delete, exit,"
                 "$mod+Alt, G, exec, ~/nixos/scripts/gamemode.sh"
-                "CTRL+ALT, W, exec, noctalia-shell kill || uwsm-app -- noctalia-shell"
-                "$mod, A, exec, noctalia-shell ipc call launcher toggle"
+                "CTRL+ALT, W, exec, pkill noctalia || uwsm-app -- noctalia"
+                "$mod, A, exec, noctalia msg panel-toggle launcher"
                 "$mod, Q, killactive,"
                 "$mod, W, togglefloating,"
                 "$mod+SHIFT, F, fullscreen"
-                "$mod, P, exec, noctalia-shell ipc call plugin:screenshot takeScreenshot region"
+                "$mod, P, exec, noctalia msg screenshot-region"
 
                 # Move focus with mod + arrow keys
                 "$mod, left, movefocus, l"
@@ -138,8 +138,8 @@
                 ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
                 ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
                 ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-                ",XF86MonBrightnessUp, exec, noctalia-shell ipc call brightness increase"
-                ",XF86MonBrightnessDown, exec, noctalia-shell ipc call brightness decrease"
+                ",XF86MonBrightnessUp, exec, noctalia msg brightness-up"
+                ",XF86MonBrightnessDown, exec, noctalia msg brightness-down"
               ];
 
               bindl = [
@@ -191,7 +191,7 @@
               ];
 
               layerrule = [
-                "match:namespace noctalia-shell:regionSelector, no_anim on"
+                "match:namespace noctalia:regionSelector, no_anim on"
               ];
 
               workspace = [

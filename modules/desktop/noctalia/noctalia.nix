@@ -35,8 +35,8 @@
         hardware.i2c.enable = true;
         environment.systemPackages = [ pkgs.ddcutil ];
 
-        home-manager.users.shonh = {
-          imports = [ inputs.noctalia.homeModules.default ];
+        home-manager.users.shonh = { config, lib, ... }: {
+          # imports = [ inputs.noctalia.homeModules.default ];
 
           # UPDATED: Renamed from noctalia-shell to noctalia
           systemd.user.services.noctalia = {
@@ -47,7 +47,6 @@
             };
             Service = {
               Type = "simple";
-              # UPDATED: The v5 executable is simply 'noctalia'
               ExecStart = "${pkgs.uwsm}/bin/uwsm app -- noctalia";
               Restart = "always";
               RestartSec = 2;
@@ -57,13 +56,20 @@
             };
           };
 
-          # UPDATED: Enable the v5 module but let the app handle its own TOML config via the GUI
-          programs.noctalia = {
-            enable = true;
-          };
+          # programs.noctalia = {
+          #   enable = true;
+          # };
 
-          # Screenshot Plugin Dependencies
+          # Declaratively create native, mutable symlinks every time the system builds
+          home.activation.linkNoctalia = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            ln -sfn ${config.home.homeDirectory}/nixos/modules/desktop/noctalia ${config.home.homeDirectory}/.config/noctalia
+            ln -sfn ${config.home.homeDirectory}/nixos/modules/desktop/noctalia/state ${config.home.homeDirectory}/.local/state/noctalia
+          '';
+
+          # Screenshot Plugin Dependencies + Noctalia
           home.packages = with pkgs; [
+            inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
+
             grim
             imagemagick
             wl-clipboard

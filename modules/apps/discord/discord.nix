@@ -24,6 +24,9 @@
             enable = true;
             vesktop.enable = true;
 
+            # Silences the warning about the standard Discord client missing a modloader
+            discord.vencord.enable = true;
+
             # quickCss = builtins.readFile ./discord.css;
 
             config = {
@@ -39,9 +42,9 @@
                 betterSettings.enable = true;
                 betterUploadButton.enable = true;
                 biggerStreamPreview.enable = true;
-                BlurNSFW.enable = true;
+                blurNsfw.enable = true; # UPDATED
                 callTimer.enable = true;
-                ClearURLs.enable = true;
+                clearUrls.enable = true; # UPDATED
 
                 clientTheme = {
                   enable = true;
@@ -49,8 +52,8 @@
                 };
 
                 copyFileContents.enable = true;
-                CopyUserURLs.enable = true;
-                CustomRPC.enable = true;
+                copyUserUrls.enable = true; # UPDATED
+                customRpc.enable = true; # UPDATED
                 dearrow.enable = true;
                 dontRoundMyTimestamps.enable = true;
                 fakeNitro.enable = true;
