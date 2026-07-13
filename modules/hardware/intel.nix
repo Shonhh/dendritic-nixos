@@ -1,7 +1,7 @@
 { ... }:
 
 {
-  flake.nixosModules.nvidia =
+  flake.nixosModules.intel =
     {
       config,
       lib,

@@ -29,6 +29,8 @@
           max-jobs = "auto";
         };
 
+        nixpkgs.config.allowUnfree = true;
+
         # --- Kernel ---
         boot.kernelPackages = pkgs.linuxPackages_zen;
         boot.kernelModules = [ "ntsync" ];
@@ -95,6 +97,8 @@
 
         # --- Home Manager Base ---
         home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
           backupFileExtension = "backup";
 
           users.shonh = {

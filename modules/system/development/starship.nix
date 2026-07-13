@@ -1,7 +1,7 @@
 { ... }:
 
 {
-  flake.nixosModules.development =
+  flake.nixosModules.starship =
     {
       inputs,
       config,

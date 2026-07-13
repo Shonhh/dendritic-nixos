@@ -64,11 +64,6 @@
             initrd.verbose = false;
           };
 
-          nixpkgs.config.allowUnfree = true;
-          nixpkgs.config.allowUnfreePredicate = pkg: true;
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-
           # Enable various user-defined modules
           mySystem = {
             # Turn on the core system

@@ -72,11 +72,6 @@
             initrd.verbose = false;
           };
 
-          nixpkgs.config.allowUnfree = true;
-          nixpkgs.config.allowUnfreePredicate = pkg: true;
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-
           # --- 1TB SHARED DRIVE MOUNT ---
           fileSystems."/mnt/shared" = {
             device = "/dev/disk/by-uuid/3D1BD58875712A30";

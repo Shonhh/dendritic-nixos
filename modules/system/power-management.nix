@@ -2,7 +2,7 @@
 
 {
   # Push the configuration into the Flake's module pool
-  flake.nixosModules.bluetooth =
+  flake.nixosModules.power-management =
     {
       config,
       lib,

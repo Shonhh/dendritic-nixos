@@ -60,10 +60,25 @@
           #   enable = true;
           # };
 
-          # Declaratively create native, mutable symlinks every time the system builds
+          # Keep declarative config in the repo, but leave runtime state local.
           home.activation.linkNoctalia = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-            ln -sfn ${config.home.homeDirectory}/nixos/modules/desktop/noctalia ${config.home.homeDirectory}/.config/noctalia
-            ln -sfn ${config.home.homeDirectory}/nixos/modules/desktop/noctalia/state ${config.home.homeDirectory}/.local/state/noctalia
+            sourceDir="${config.home.homeDirectory}/nixos/modules/desktop/noctalia"
+            configDir="${config.home.homeDirectory}/.config/noctalia"
+            stateDir="${config.home.homeDirectory}/.local/state/noctalia"
+
+            if [ -L "$configDir" ]; then
+              rm "$configDir"
+            fi
+
+            if [ -L "$stateDir" ]; then
+              rm "$stateDir"
+            fi
+
+            mkdir -p "$configDir" "$stateDir"
+
+            ln -sfnT "$sourceDir/settings.toml" "$configDir/settings.toml"
+            ln -sfnT "$sourceDir/plugins.json" "$configDir/plugins.json"
+            ln -sfnT "$sourceDir/plugins" "$configDir/plugins"
           '';
 
           # Screenshot Plugin Dependencies + Noctalia

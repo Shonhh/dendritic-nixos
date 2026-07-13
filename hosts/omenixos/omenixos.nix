@@ -74,11 +74,6 @@
 
           systemd.tpm2.enable = false;
 
-          nixpkgs.config.allowUnfree = true;
-          nixpkgs.config.allowUnfreePredicate = pkg: true;
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-
           # --- 2TB SHARED DRIVE MOUNT ---
           fileSystems."/mnt/shared" = {
             device = "/dev/disk/by-uuid/72925CFC925CC66F";
@@ -137,6 +132,7 @@
               helium.enable = true;
               ryubing.enable = true;
               odysseus.enable = true;
+              codex.enable = true;
               obs-studio.enable = true;
               dolphin-emu.enable = true;
             };
