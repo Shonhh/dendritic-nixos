@@ -99,7 +99,7 @@
               core.enable = true;
               flatpak.enable = true;
               development.enable = true;
-              docker.enable = true;
+              # docker.enable = true;
               polkit.enable = true;
               nixgc.enable = true;
               rebuild-system.enable = true;
@@ -131,7 +131,7 @@
               thunderbird.enable = true;
               helium.enable = true;
               ryubing.enable = true;
-              odysseus.enable = true;
+              # odysseus.enable = true;
               codex.enable = true;
               obs-studio.enable = true;
               dolphin-emu.enable = true;
@@ -139,7 +139,7 @@
 
             games = {
               minecraft.enable = true;
-              mindustry.enable = true;
+              # mindustry.enable = true;
             };
 
             # Define Environment

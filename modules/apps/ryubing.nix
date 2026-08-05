@@ -13,13 +13,13 @@
 
       ryubing-canary = pkgs.appimageTools.wrapType2 rec {
         pname = "ryubing-canary";
-        version = "1.3.306";
+        version = "1.3.338";
 
         src = pkgs.fetchurl {
           # Hardcoded the prefix to 'ryujinx-' to match the exact file name on their server
           url = "https://git.ryujinx.app/Ryubing/Canary/releases/download/${version}/ryujinx-canary-${version}-x64.AppImage";
 
-          hash = "sha256-YCI17sN+7dzXKGQs6493Ij5PwrzcqhtM9EdmOQ6NYQw=";
+          hash = "sha256-oI3cW/gvsZ+TukGkrydiSVS3fw61xFO60bLXHjVcT+Y=";
         };
 
         # INJECT MISSING HOST LIBRARIES HERE
