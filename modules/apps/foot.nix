@@ -41,6 +41,8 @@
               };
 
               colors-dark = {
+                alpha = 0.80;
+                blur = "yes";
                 background = colors.base00;
                 foreground = colors.base05;
                 regular0 = colors.base01; # black
@@ -59,6 +61,11 @@
                 bright5 = colors.base0E;
                 bright6 = colors.base0C;
                 bright7 = colors.base07;
+              };
+
+              colors-light = {
+                alpha = 0.80;
+                blur = "yes";
               };
             };
           };

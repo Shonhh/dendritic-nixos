@@ -182,7 +182,6 @@
 
               windowrule = [
                 # Opacity Rules
-                "match:class ^(foot)$, opacity 0.80 0.80"
                 "match:class ^([tT]hunar)$, opacity 0.75 0.75"
                 "match:class ^(discord)$, opacity 0.80 0.80"
                 "match:class ^([sS]potify)$, opacity 0.80 0.80"
@@ -191,7 +190,11 @@
               ];
 
               layerrule = [
-                "match:namespace noctalia:regionSelector, no_anim on"
+                # Blur normal Noctalia surfaces and let Noctalia handle their animations.
+                "match:namespace ^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$, no_anim on, ignore_alpha 0.5, blur on, blur_popups on"
+
+                # The screenshot selector uses a separate namespace.
+                "match:namespace ^noctalia-screenshot-region$, no_anim on"
               ];
 
               workspace = [
