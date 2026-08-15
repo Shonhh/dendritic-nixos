@@ -111,7 +111,6 @@
 
             games = {
               minecraft.enable = true;
-              mindustry.enable = true;
             };
 
             # Define Environment
