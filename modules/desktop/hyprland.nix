@@ -182,7 +182,7 @@
 
               windowrule = [
                 # Opacity Rules
-                "match:class ^($terminal)$, opacity 0.80 0.80"
+                "match:class ^(foot)$, opacity 0.80 0.80"
                 "match:class ^([tT]hunar)$, opacity 0.75 0.75"
                 "match:class ^(discord)$, opacity 0.80 0.80"
                 "match:class ^([sS]potify)$, opacity 0.80 0.80"

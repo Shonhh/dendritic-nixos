@@ -16,83 +16,74 @@
       options.mySystem.desktop.noctalia.enable = lib.mkEnableOption "Noctalia Shell";
 
       config = lib.mkIf cfg.enable {
-        # Skip local compilation
+        # Use Noctalia's binary cache instead of compiling locally.
         nix.settings = {
-          extra-substituters = [ "https://noctalia.cachix.org" ];
+          extra-substituters = [
+            "https://noctalia.cachix.org"
+          ];
+
           extra-trusted-public-keys = [
             "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
           ];
         };
 
-        # Noctalia needs these background services to read battery and hardware data
+        # Services used by Noctalia for battery, power, and Bluetooth data.
         mySystem.system.power-management.enable = true;
         mySystem.hardware.bluetooth.enable = true;
 
-        # Noctalia needs a secret service
+        # Secret Service provider used by Noctalia.
         services.gnome.gnome-keyring.enable = true;
 
-        # I2C Hardware bus for brightness controls
+        # I2C and DDC/CI support for external-display brightness controls.
         hardware.i2c.enable = true;
-        environment.systemPackages = [ pkgs.ddcutil ];
 
-        home-manager.users.shonh = { config, lib, ... }: {
-          # imports = [ inputs.noctalia.homeModules.default ];
+        environment.systemPackages = with pkgs; [
+          ddcutil
+        ];
 
-          # UPDATED: Renamed from noctalia-shell to noctalia
-          systemd.user.services.noctalia = {
-            Unit = {
-              Description = "Noctalia Desktop Environment";
-              PartOf = [ "graphical-session.target" ];
-              After = [ "graphical-session.target" ];
+        home-manager.users.shonh =
+          { config, ... }:
+          let
+            # This remains outside the Nix store so Noctalia can write GUI
+            # changes directly into the Git working tree.
+            noctaliaRepo = "${config.home.homeDirectory}/nixos/modules/desktop/noctalia";
+          in
+          {
+            imports = [
+              inputs.noctalia.homeModules.default
+            ];
+
+            xdg.enable = true;
+
+            # Stylix and any other Nix modules can merge attribute-set
+            # definitions into programs.noctalia.settings.
+            #
+            # Do not set `settings = ./config.toml` here because a path cannot
+            # be merged with the attribute sets supplied by Stylix.
+            programs.noctalia = {
+              enable = true;
+              systemd.enable = true;
             };
-            Service = {
-              Type = "simple";
-              ExecStart = "${pkgs.uwsm}/bin/uwsm app -- noctalia";
-              Restart = "always";
-              RestartSec = 2;
-            };
-            Install = {
-              WantedBy = [ "graphical-session.target" ];
-            };
+
+            # Noctalia writes GUI changes to:
+            #
+            #   ~/.local/state/noctalia/settings.toml
+            #
+            # The destination is managed by Home Manager, while the writable
+            # source remains in the Git repository.
+            xdg.stateFile."noctalia/settings.toml".source =
+              config.lib.file.mkOutOfStoreSymlink "${noctaliaRepo}/settings.toml";
+
+            # Utilities used by screenshot, clipboard, and audio actions.
+            home.packages = with pkgs; [
+              grim
+              imagemagick
+              wl-clipboard
+              cliphist
+              pwvucontrol
+              hyprshot
+            ];
           };
-
-          # programs.noctalia = {
-          #   enable = true;
-          # };
-
-          # Keep declarative config in the repo, but leave runtime state local.
-          home.activation.linkNoctalia = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-            sourceDir="${config.home.homeDirectory}/nixos/modules/desktop/noctalia"
-            configDir="${config.home.homeDirectory}/.config/noctalia"
-            stateDir="${config.home.homeDirectory}/.local/state/noctalia"
-
-            if [ -L "$configDir" ]; then
-              rm "$configDir"
-            fi
-
-            if [ -L "$stateDir" ]; then
-              rm "$stateDir"
-            fi
-
-            mkdir -p "$configDir" "$stateDir"
-
-            ln -sfnT "$sourceDir/settings.toml" "$configDir/settings.toml"
-            ln -sfnT "$sourceDir/plugins.json" "$configDir/plugins.json"
-            ln -sfnT "$sourceDir/plugins" "$configDir/plugins"
-          '';
-
-          # Screenshot Plugin Dependencies + Noctalia
-          home.packages = with pkgs; [
-            inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
-
-            grim
-            imagemagick
-            wl-clipboard
-            cliphist
-            pwvucontrol
-            hyprshot
-          ];
-        };
       };
     };
 }

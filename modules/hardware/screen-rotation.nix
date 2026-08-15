@@ -16,23 +16,33 @@
         lib.mkEnableOption "Automatic Screen Rotation Support";
 
       config = lib.mkIf cfg.enable {
-        hardware.sensor.iio.enable = true;
 
-        environment.systemPackages = with pkgs; [
-          iio-hyprland
-        ];
+        # Enable iio-sensor-proxy and install iio-hyprland
+        programs.iio-hyprland.enable = true;
 
-        # Native NixOS User Service (Bypasses Home Manager entirely)
+        # Start screen rotation with the graphical session
         systemd.user.services.iio-hyprland = {
-          description = "IIO Sensor Bridge for Hyprland";
+          description = "Automatic Screen Rotation for Hyprland";
+
+          wantedBy = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
           after = [ "graphical-session.target" ];
 
+          # iio-hyprland invokes hyprctl and jq internally
+          path = with pkgs; [
+            hyprland
+            jq
+          ];
+
           serviceConfig = {
-            Type = "simple";
-            ExecStart = "${pkgs.uwsm}/bin/uwsm app -- ${pkgs.iio-hyprland}/bin/iio-hyprland eDP-1";
-            Restart = "always";
-            RestartSec = "2";
+            Type = "exec";
+            ExecStart = "${pkgs.iio-hyprland}/bin/iio-hyprland eDP-1";
+
+            Restart = "on-failure";
+            RestartSec = "2s";
+
+            # Match how UWSM places background graphical services
+            Slice = "background-graphical.slice";
           };
         };
       };
