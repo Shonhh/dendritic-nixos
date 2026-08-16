@@ -19,60 +19,64 @@
         users.users.shonh.shell = pkgs.zsh;
         mySystem.system.starship.enable = true;
 
-        home-manager.users.shonh = {
-          programs.zsh = {
-            enable = true;
-            enableCompletion = true;
+        home-manager.users.shonh =
+          { config, ... }:
+          {
+            programs.zsh = {
+              enable = true;
+              enableCompletion = true;
 
-            # Faded predictions based on history
-            autosuggestion.enable = true;
+              dotDir = "${config.xdg.configHome}/zsh";
 
-            # Coloring of valid/invalid commands
-            syntaxHighlighting.enable = true;
+              # Faded predictions based on history
+              autosuggestion.enable = true;
 
-            # UP arrow searches history based on what you already typed
-            historySubstringSearch.enable = true;
+              # Coloring of valid/invalid commands
+              syntaxHighlighting.enable = true;
 
-            # Sensible defaults (Optional, but highly recommended for a modern feel)
-            history = {
-              size = 10000;
-              save = 10000;
-              ignoreDups = true; # Don't save duplicate commands to history
-              share = true; # Share history across multiple open terminal windows
+              # UP arrow searches history based on what you already typed
+              historySubstringSearch.enable = true;
+
+              # Sensible defaults (Optional, but highly recommended for a modern feel)
+              history = {
+                size = 10000;
+                save = 10000;
+                ignoreDups = true; # Don't save duplicate commands to history
+                share = true; # Share history across multiple open terminal windows
+              };
+
+              initContent = ''
+                fastfetch
+              '';
+
+              shellAliases = {
+                # bat, zoxide, eza, ripgrep, fzf, etc
+                cat = lib.getExe pkgs.bat;
+                ls = lib.getExe pkgs.eza;
+                grep = lib.getExe pkgs.ripgrep;
+                rg = lib.getExe pkgs.ripgrep;
+                find = lib.getExe pkgs.fd;
+                du = lib.getExe pkgs.dust;
+              };
             };
 
-            initContent = ''
+            programs.zoxide = {
+              enable = true;
+              enableZshIntegration = true;
+              options = [ "--cmd cd" ];
+            };
+
+            programs.fzf = {
+              enable = true;
+              enableZshIntegration = true;
+            };
+
+            home.packages = with pkgs; [
               fastfetch
-            '';
-
-            shellAliases = {
-              # bat, zoxide, eza, ripgrep, fzf, etc
-              cat = lib.getExe pkgs.bat;
-              ls = lib.getExe pkgs.eza;
-              grep = lib.getExe pkgs.ripgrep;
-              rg = lib.getExe pkgs.ripgrep;
-              find = lib.getExe pkgs.fd;
-              du = lib.getExe pkgs.dust;
-            };
+              tldr
+              delta
+            ];
           };
-
-          programs.zoxide = {
-            enable = true;
-            enableZshIntegration = true;
-            options = [ "--cmd cd" ];
-          };
-
-          programs.fzf = {
-            enable = true;
-            enableZshIntegration = true;
-          };
-
-          home.packages = with pkgs; [
-            fastfetch
-            tldr
-            delta
-          ];
-        };
       };
     };
 }

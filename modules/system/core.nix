@@ -55,7 +55,7 @@
 
         # --- X11 & Login Manager ---
         services.xserver.enable = true;
-        mySystem.system.regreet.enable = true;
+        mySystem.system.tuigreet.enable = true;
         services.xserver.xkb = {
           layout = "us";
           variant = "";

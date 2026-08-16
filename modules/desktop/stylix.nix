@@ -73,6 +73,8 @@
             HYPRCURSOR_THEME = config.stylix.cursor.name;
             HYPRCURSOR_SIZE = toString config.stylix.cursor.size;
           };
+
+          home.pointerCursor.enable = true;
         };
       };
     };
