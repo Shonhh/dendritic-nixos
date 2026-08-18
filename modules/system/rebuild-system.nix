@@ -55,6 +55,8 @@
             if [ "$ACTION" == "update" ]; then
               echo "Updating Flake inputs..."
               nix flake update
+              echo "Updating Flatpaks..."
+              flatpak update
               BUILD_ACTION="switch"
             else
               BUILD_ACTION=$ACTION

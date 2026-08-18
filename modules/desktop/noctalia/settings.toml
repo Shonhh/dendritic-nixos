@@ -1,4 +1,4 @@
-config_version = 8
+config_version = 12
 
 [bar.default]
 background_opacity = 0.79999998211860657
@@ -7,7 +7,7 @@ capsule_opacity = 0.4999999888241291
 capsule_padding = 3.0
 capsule_radius = 6
 center = [ "workspaces" ]
-end = [ "bluetooth", "tray", "notifications", "network", "battery", "volume", "brightness", "clock", "session" ]
+end = [ "tray", "notifications", "bluetooth", "network", "battery", "volume", "brightness", "clock", "session" ]
 font_family = "FiraCode Nerd Font"
 font_weight = 400
 margin_edge = 0
@@ -66,11 +66,13 @@ widget_order = [ "lockscreen-login-box@HDMI-A-1", "lockscreen-login-box@eDP-1" ]
     visible = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1"]
-    box_height = 229.0
+    box_height = 196.0
     box_width = 810.0
     cx = 960.0
     cy = 881.5
     output = "HDMI-A-1"
+    placement_height = 1080.0
+    placement_width = 1920.0
     rotation = 0.0
     type = "login_box"
 
@@ -87,14 +89,17 @@ widget_order = [ "lockscreen-login-box@HDMI-A-1", "lockscreen-login-box@eDP-1" ]
         show_login_button = true
         show_media = true
         show_session_buttons = true
+        show_unlock_hint = true
         show_weather = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
-    box_height = 229.0
+    box_height = 196.0
     box_width = 720.0
     cx = 768.0
     cy = 841.0
     output = "eDP-1"
+    placement_height = 960.0
+    placement_width = 1536.0
     rotation = 0.0
     type = "login_box"
 
@@ -111,6 +116,7 @@ widget_order = [ "lockscreen-login-box@HDMI-A-1", "lockscreen-login-box@eDP-1" ]
         show_login_button = true
         show_media = true
         show_session_buttons = true
+        show_unlock_hint = true
         show_weather = true
 
 [shell]
@@ -212,6 +218,6 @@ capsule_opacity = 0.5
 capsule = true
 capsule_opacity = 0.0
 capsule_padding = 0
-display = "name"
 font_weight = 600
+label_source = "name"
 max_label_chars = 20
