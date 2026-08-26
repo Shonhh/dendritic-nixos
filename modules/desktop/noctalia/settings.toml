@@ -150,6 +150,7 @@ widget_order = [ "lockscreen-login-box@DP-1", "lockscreen-login-box@HDMI-A-1", "
 font_family = "FiraCode Nerd Font"
 launch_apps_custom_command = "uwsm-app -- $CMD"
 settings_show_advanced = true
+settings_window_translucent = true
 
     [shell.animation]
     speed = 1.5000000223517418
@@ -162,6 +163,10 @@ settings_show_advanced = true
     session_position = "center"
     shadow = false
     transparency_mode = "glass"
+
+    [shell.screenshot]
+    directory = "~/Pictures/Screenshots"
+    save_to_file = false
 
 [theme]
 builtin = "Gruvbox"
