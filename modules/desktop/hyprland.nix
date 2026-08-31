@@ -10,6 +10,84 @@
     }:
     let
       cfg = config.mySystem.desktop.hyprland;
+
+      focusMode = pkgs.writeShellScript "hypr-focus-mode" ''
+        set -eu
+
+        HYPRCTL="${config.programs.hyprland.package}/bin/hyprctl"
+
+        # toggle bar
+        noctalia msg bar-toggle
+
+        BORDER_SIZE="$(
+          "$HYPRCTL" getoption general:border_size \
+            | awk 'NR == 1 { print $2 }'
+        )"
+
+
+        if [ "$BORDER_SIZE" = "0" ]; then
+          "$HYPRCTL" reload
+          exit 0
+        fi
+
+        "$HYPRCTL" --batch "\
+          keyword general:gaps_in 0;\
+          keyword general:gaps_out 0;\
+          keyword general:border_size 0;\
+          keyword decoration:rounding 0;\
+          keyword decoration:shadow:enabled false;\
+          keyword decoration:blur:enabled false"
+
+        "$HYPRCTL" -r keyword windowrule \
+          "match:class .*, opacity 1.0 override 1.0 override 1.0 override, force_rgbx on"
+      '';
+
+      gameMode = pkgs.writeShellScript "hypr-game-mode" ''
+        set -eu
+
+        HYPRCTL="${config.programs.hyprland.package}/bin/hyprctl"
+        POWERPROFILES="${pkgs.power-profiles-daemon}/bin/powerprofilesctl"
+
+        STATE_DIR="''${XDG_RUNTIME_DIR:-/tmp}"
+        POWER_STATE="$STATE_DIR/hypr-gamemode-power-profile"
+
+        ANIMATIONS="$(
+          "$HYPRCTL" getoption animations:enabled \
+            | awk 'NR == 1 { print $2 }'
+        )"
+
+        if [ "$ANIMATIONS" = "0" ]; then
+          "$HYPRCTL" reload
+
+          if [ -f "$POWER_STATE" ]; then
+            PROFILE="$(cat "$POWER_STATE")"
+
+            if [ -n "$PROFILE" ]; then
+              noctalia msg power-set "$PROFILE"
+            fi
+
+            rm -f "$POWER_STATE"
+          else
+            noctalia msg power-set balanced
+          fi
+
+          exit 0
+        fi
+
+        "$POWERPROFILES" get > "$POWER_STATE" 2>/dev/null \
+          || printf '%s\n' "balanced" > "$POWER_STATE"
+
+        noctalia msg power-set performance
+
+        "$HYPRCTL" --batch "\
+          keyword animations:enabled false;\
+          keyword decoration:shadow:enabled false;\
+          keyword decoration:blur:enabled false;\
+          keyword general:gaps_in 0;\
+          keyword general:gaps_out 0;\
+          keyword general:border_size 0;\
+          keyword decoration:rounding 0"
+      '';
     in
     {
       options.mySystem.desktop.hyprland = {
@@ -85,13 +163,20 @@
 
                 # Desktop Keybinds
                 "$mod, Delete, exit,"
-                "$mod+Alt, G, exec, ~/nixos/scripts/gamemode.sh"
-                "CTRL+ALT, W, exec, pkill noctalia || uwsm-app -- noctalia"
+                "$mod, P, exec, noctalia msg screenshot-region"
+                "$mod+Alt, G, exec, ${gameMode}"
+
+                # Toggle Focus / Zen mode
+                "$mod+Alt, F, exec, ${focusMode}"
+                "$mod+SHIFT, F, fullscreen"
+
+                # Toggle Bar
+                "CTRL+ALT, W, exec, noctalia msg bar-toggle"
+
+                # Window Binds
                 "$mod, A, exec, noctalia msg panel-toggle launcher"
                 "$mod, Q, killactive,"
                 "$mod, W, togglefloating,"
-                "$mod+SHIFT, F, fullscreen"
-                "$mod, P, exec, noctalia msg screenshot-region"
 
                 # Move focus with mod + arrow keys
                 "$mod, left, movefocus, l"
@@ -186,7 +271,7 @@
                 "match:class ^(discord)$, opacity 0.80 0.80"
                 "match:class ^([sS]potify)$, opacity 0.80 0.80"
                 "match:class ^(dev.zed.Zed)$, opacity 0.92 0.92"
-                "match:class ^(obsidian)$, opacity 0.92 0.92"
+                "match:class ^(md.Obsidian)$, opacity 0.92 0.92"
               ];
 
               layerrule = [
