@@ -254,8 +254,8 @@
 
                 blur = {
                   enabled = true;
-                  size = 5;
-                  passes = 3;
+                  size = 9;
+                  passes = 4;
                   new_optimizations = "on";
                   ignore_opacity = "on";
                   xray = false;
