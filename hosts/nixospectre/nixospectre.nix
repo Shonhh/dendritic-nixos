@@ -123,7 +123,7 @@
               noctalia.enable = true;
               stylix = {
                 enable = true;
-                wallpaper = inputs.self + "/wallpapers/gruvified-wallpaper2.png";
+                wallpaper = inputs.self + "/wallpapers/gruvified-wallpaper5.png";
               };
               plymouth.enable = true;
             };
