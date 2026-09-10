@@ -135,6 +135,7 @@
               codex.enable = true;
               obs-studio.enable = true;
               dolphin-emu.enable = true;
+              qbittorrent.enable = true;
             };
 
             games = {
