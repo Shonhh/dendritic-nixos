@@ -136,6 +136,7 @@
               obs-studio.enable = true;
               dolphin-emu.enable = true;
               qbittorrent.enable = true;
+              libreoffice.enable = true;
             };
 
             games = {

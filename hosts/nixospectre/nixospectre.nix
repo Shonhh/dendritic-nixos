@@ -107,6 +107,7 @@
               };
               thunderbird.enable = true;
               helium.enable = true;
+              libreoffice.enable = true;
             };
 
             games = {

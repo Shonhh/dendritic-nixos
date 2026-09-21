@@ -19,7 +19,7 @@
           # Hardcoded the prefix to 'ryujinx-' to match the exact file name on their server
           url = "https://git.ryujinx.app/Ryubing/Canary/releases/download/${version}/ryujinx-canary-${version}-x64.AppImage";
 
-          hash = "sha256-JaSaQn2axDu9LjSsS3myZRiEecd+CvqblqI++dud/wY=";
+          hash = "sha256-5xv1QB6XUYQe707FHFR05wAUt4MGs99/yIZiOqb5Pxs=";
         };
 
         # INJECT MISSING HOST LIBRARIES HERE
