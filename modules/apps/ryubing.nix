@@ -13,7 +13,7 @@
 
       ryubing-canary = pkgs.appimageTools.wrapType2 rec {
         pname = "ryubing-canary";
-        version = "1.3.341";
+        version = "1.3.351";
 
         src = pkgs.fetchurl {
           # Hardcoded the prefix to 'ryujinx-' to match the exact file name on their server

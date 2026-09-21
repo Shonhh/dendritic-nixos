@@ -34,6 +34,7 @@
             ];
 
             userSettings = {
+              show_wrap_guides = true;
               terminal = {
                 font-family = "${config.stylix.fonts.monospace.name}";
               };
