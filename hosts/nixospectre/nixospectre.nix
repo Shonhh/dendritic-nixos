@@ -108,6 +108,7 @@
               thunderbird.enable = true;
               helium.enable = true;
               libreoffice.enable = true;
+              slack.enable = true;
             };
 
             games = {
