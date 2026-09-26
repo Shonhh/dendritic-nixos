@@ -1,7 +1,7 @@
 { ... }:
 
 {
-  flake.nixosModules.dolphin-emu =
+  flake.nixosModules.r2modman =
     {
       config,
       lib,
@@ -9,14 +9,14 @@
       ...
     }:
     let
-      cfg = config.mySystem.apps.dolphin-emu;
+      cfg = config.mySystem.games.r2modman;
     in
     {
-      options.mySystem.apps.dolphin-emu.enable = lib.mkEnableOption "Dolphin Wii Emulator";
+      options.mySystem.games.r2modman.enable = lib.mkEnableOption "Unofficial Thunderstore Mod Manager";
 
       config = lib.mkIf cfg.enable {
         home-manager.users.shonh.home.packages = with pkgs; [
-          dolphin-emu
+          r2modman
         ];
       };
     };

@@ -130,17 +130,18 @@
               anki.enable = true;
               thunderbird.enable = true;
               helium.enable = true;
-              ryubing.enable = true;
               # odysseus.enable = true;
               codex.enable = true;
               obs-studio.enable = true;
-              dolphin-emu.enable = true;
               qbittorrent.enable = true;
               libreoffice.enable = true;
             };
 
             games = {
               minecraft.enable = true;
+              ryubing.enable = true;
+              dolphin-emu.enable = true;
+              r2modman.enable = true;
               # mindustry.enable = true;
             };
 

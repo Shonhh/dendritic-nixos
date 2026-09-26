@@ -9,7 +9,7 @@
       ...
     }:
     let
-      cfg = config.mySystem.apps.ryubing;
+      cfg = config.mySystem.games.ryubing;
 
       ryubing-canary = pkgs.appimageTools.wrapType2 rec {
         pname = "ryubing-canary";
@@ -45,7 +45,7 @@
       };
     in
     {
-      options.mySystem.apps.ryubing.enable = lib.mkEnableOption "Switch 1 Emulator";
+      options.mySystem.games.ryubing.enable = lib.mkEnableOption "Switch 1 Emulator";
 
       config = lib.mkIf cfg.enable {
         # Using home-manager to match your earlier configurations,
