@@ -1,0 +1,33 @@
+{ pkgs }:
+
+pkgs.appimageTools.wrapType2 rec {
+  pname = "ryubing-canary";
+  version = "1.3.351";
+
+  src = pkgs.fetchurl {
+    url = "https://git.ryujinx.app/Ryubing/Canary/releases/download/${version}/ryujinx-canary-${version}-x64.AppImage";
+    hash = "sha256-5xv1QB6XUYQe707FHFR05wAUt4MGs99/yIZiOqb5Pxs=";
+  };
+
+  extraPkgs =
+    pkgs: with pkgs; [
+      icu
+      udev
+    ];
+
+  extraInstallCommands =
+    let
+      contents = pkgs.appimageTools.extract {
+        inherit pname version src;
+      };
+    in
+    ''
+      install -m 444 -D ${contents}/*.desktop -t $out/share/applications
+
+      sed -i 's|^Exec=.*|Exec=env GAMEMODE_DISABLE=1 ryubing-canary %f|' $out/share/applications/*.desktop
+
+      if [ -d "${contents}/usr/share/icons" ]; then
+        cp -r ${contents}/usr/share/icons $out/share
+      fi
+    '';
+}
