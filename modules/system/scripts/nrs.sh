@@ -1,20 +1,24 @@
 action="${1:-}"
+
 if [ "$#" -ne 1 ]; then
   echo "Usage: nrs {switch|boot|test|build|check|fmt|update|pull|clean}" >&2
   exit 2
 fi
+
 case "$action" in
   switch|boot|test|build|check|fmt|update|pull|clean) ;;
   *) echo "Unknown action: $action" >&2; exit 2 ;;
 esac
 
 if [ "$action" = clean ]; then
-  # Match the retention policy of the automatic garbage collector.
   sudo nix-collect-garbage --delete-older-than 14d
   exit 0
 fi
 
-cd "$flake_dir"
+# These variables are supplied by the Nix wrapper.
+: "${flake_dir:?Missing repository path}" "${host:?Missing host name}"
+cd "$flake_dir" || exit 1
+
 case "$action" in
   pull)
     git pull --ff-only
@@ -30,18 +34,13 @@ case "$action" in
     exit 0
     ;;
   check)
-    nix flake check
-    nix eval --json .#nixosConfigurations --apply builtins.attrNames |
-      jq -r '.[]' |
-      while IFS= read -r target; do
-        nix eval --raw ".#nixosConfigurations.$target.config.system.build.toplevel.drvPath"
-        printf '\n'
-      done
+    nix flake check --no-update-lock-file --keep-going --print-build-logs
     exit 0
     ;;
 esac
 
 before="$(readlink -f /run/current-system)"
+
 if [ "$action" = build ]; then
   nixos-rebuild build --flake ".#$host" --log-format internal-json |& nom --json
 else

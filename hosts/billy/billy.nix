@@ -59,7 +59,11 @@ in
 
       # Enable various user-defined modules
       mySystem = {
-        profiles.workstation.enable = true;
+        profiles = {
+          workstation.enable = true;
+          gaming.enable = true;
+        };
+
         system.limine.enable = true;
         system.quiet-boot.enable = true;
 
@@ -73,11 +77,6 @@ in
             intelBusId = "PCI:0:2:0";
             nvidiaBusId = "PCI:1:0:0";
           };
-        };
-
-        games = {
-          ryubing.enable = true;
-          dolphin-emu.enable = true;
         };
 
         # Define Environment

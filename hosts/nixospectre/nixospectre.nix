@@ -32,6 +32,7 @@ in
       # Enable various user-defined modules
       mySystem = {
         profiles.workstation.enable = true;
+
         system.limine.enable = true;
         system.quiet-boot.enable = true;
 
@@ -46,13 +47,8 @@ in
           foot = {
             sizeModifier = -2;
           };
-          obsidian.enable = true;
-          anki.enable = true;
-          zoom = {
-            enable = true;
-            scaleFactor = 2;
-          };
-          libreoffice.enable = true;
+          steam.enable = true;
+          zoom.scaleFactor = 2;
           slack.enable = true;
         };
 

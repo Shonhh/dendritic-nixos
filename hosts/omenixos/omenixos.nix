@@ -61,7 +61,10 @@ in
 
       # Enable various user-defined modules
       mySystem = {
-        profiles.workstation.enable = true;
+        profiles = {
+          workstation.enable = true;
+          gaming.enable = true;
+        };
         system.limine.enable = true;
         system.quiet-boot.enable = true;
 
@@ -73,19 +76,9 @@ in
 
         # Enable Apps
         apps = {
-          obsidian.enable = true;
-          zoom.enable = true;
-          anki.enable = true;
           codex.enable = true;
           obs-studio.enable = true;
           qbittorrent.enable = true;
-          libreoffice.enable = true;
-        };
-
-        games = {
-          ryubing.enable = true;
-          dolphin-emu.enable = true;
-          r2modman.enable = true;
         };
 
         # Define Environment

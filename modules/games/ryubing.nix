@@ -13,8 +13,7 @@
       ryubing-canary = pkgs.callPackage ../../packages/ryubing.nix { };
     in
     {
-      options.mySystem.games.ryubing.enable =
-        lib.mkEnableOption "Ryubing Canary Switch emulator";
+      options.mySystem.games.ryubing.enable = lib.mkEnableOption "Ryubing Canary Switch emulator";
 
       config = lib.mkIf cfg.enable {
         home-manager.users.shonh.home.packages = [
