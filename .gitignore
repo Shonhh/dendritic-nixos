@@ -2,3 +2,5 @@
 .env
 modules/desktop/noctalia/colors.json.backup
 modules/desktop/noctalia/state/
+/result
+/result-*

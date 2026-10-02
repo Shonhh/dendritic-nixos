@@ -42,7 +42,7 @@ esac
 before="$(readlink -f /run/current-system)"
 
 if [ "$action" = build ]; then
-  nixos-rebuild build --flake ".#$host" --log-format internal-json |& nom --json
+  nixos-rebuild build --flake ".#$host" --no-link --log-format internal-json |& nom --json
 else
   sudo -v
   sudo nixos-rebuild "$action" --flake ".#$host" --log-format internal-json |& nom --json
