@@ -1,137 +1,79 @@
 { inputs, config, ... }:
-
+let
+  mkHost = import ../../lib/mk-host.nix {
+    inherit inputs;
+    nixosModules = config.flake.nixosModules;
+  };
+in
 {
-  flake.nixosConfigurations."nixospectre" = inputs.nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    specialArgs = { inherit inputs; };
+  flake.nixosConfigurations."nixospectre" = mkHost {
+    hostName = "nixospectre";
+    hardware = ./hardware-configuration.nix;
+    configuration = { config, lib, ... }: {
+      system.stateVersion = "25.11";
 
-    modules = [
-      inputs.home-manager.nixosModules.home-manager
-      inputs.stylix.nixosModules.stylix
-    ]
-    ++ (builtins.attrValues config.flake.nixosModules)
-    ++ [
-      ./hardware-configuration.nix
+      boot = {
+        loader = {
+          limine = {
+            # chainload Windows
+            extraEntries = ''
+              /Windows 11
+                  protocol: efi
+                  path: uuid(ba6caefb-d7fa-4822-be6a-4784db155c46):/EFI/Microsoft/Boot/bootmgfw.efi
+                  comment: Boot into Windows 11
+            '';
+          };
 
-      (
-        { lib, config, ... }:
-        {
-          networking.hostName = "nixospectre";
-          system.stateVersion = "25.11";
+          timeout = 5;
+          efi.canTouchEfiVariables = false; # errors with laptop
+        };
+      };
 
-          # disable stylix limine theming
-          stylix.targets.limine.image.enable = lib.mkIf config.mySystem.desktop.stylix.enable false;
+      # Enable various user-defined modules
+      mySystem = {
+        profiles.workstation.enable = true;
+        system.limine.enable = true;
+        system.quiet-boot.enable = true;
 
-          boot = {
-            loader = {
-              limine = {
-                enable = true;
-                secureBoot.enable = false;
+        # Hardware-specific modules
+        hardware = {
+          intel.enable = true;
+          screen-rotation.enable = true;
+        };
 
-                style = lib.mkIf config.mySystem.desktop.stylix.enable {
-                  wallpapers = lib.mkForce [ ];
-                  backdrop = lib.mkForce config.lib.stylix.colors.base00;
-                  graphicalTerminal.background = lib.mkForce "00${config.lib.stylix.colors.base00}";
-                };
+        # Enable Apps
+        apps = {
+          foot = {
+            sizeModifier = -2;
+          };
+          obsidian.enable = true;
+          anki.enable = true;
+          zoom = {
+            enable = true;
+            scaleFactor = 2;
+          };
+          libreoffice.enable = true;
+          slack.enable = true;
+        };
 
-                # chainload Windows
-                extraEntries = ''
-                  /Windows 11
-                      protocol: efi
-                      path: uuid(ba6caefb-d7fa-4822-be6a-4784db155c46):/EFI/Microsoft/Boot/bootmgfw.efi
-                      comment: Boot into Windows 11
-                '';
-              };
-
-              timeout = 5;
-              efi.canTouchEfiVariables = false; # errors with laptop
-            };
-
-            kernelParams = [
-              # minimal startup
-              "quiet"
-              "splash"
-              "boot.shell_on_fail"
-              "loglevel=3"
-              "udev.log_priority=3"
-              "rd.udev.log_level=3"
-              "rd.systemd.show_status=false"
-              "vt.global_cursor_default=0"
+        # Define Environment
+        desktop = {
+          displays = {
+            hyprland = [
+              "eDP-1,preferred,auto,2"
+              ",preferred,auto,1"
             ];
-
-            # minimal startup
-            consoleLogLevel = 0;
-            initrd.verbose = false;
-          };
-
-          # Enable various user-defined modules
-          mySystem = {
-            # Turn on the core system
-            system = {
-              core.enable = true;
-              flatpak.enable = true;
-              development.enable = true;
-              polkit.enable = true;
-              nixgc.enable = true;
-              rebuild-system.enable = true;
-            };
-
-            # Hardware-specific modules
-            hardware = {
-              intel.enable = true;
-              bluetooth.enable = true;
-              screen-rotation.enable = true;
-            };
-
-            # Enable Apps
-            apps = {
-              foot = {
-                enable = true;
-                sizeModifier = -2;
-              };
-              yazi.enable = true;
-              thunar.enable = true;
-              neovim.enable = true;
-              fastfetch.enable = true;
-              git.enable = true;
-              discord.enable = true;
-              zed.enable = true;
-              steam.enable = true;
-              spotify.enable = true;
-              btop.enable = true;
-              obsidian.enable = true;
-              anki.enable = true;
-              zoom = {
-                enable = true;
-                scaleFactor = 2;
-              };
-              thunderbird.enable = true;
-              helium.enable = true;
-              libreoffice.enable = true;
-              slack.enable = true;
-            };
-
-            games = {
-              minecraft.enable = true;
-            };
-
-            # Define Environment
-            desktop = {
-              wm-ctrl.enable = true;
-              hyprland = {
-                enable = true;
-                monitorScale = "2";
-              };
-              noctalia.enable = true;
-              stylix = {
-                enable = true;
-                wallpaper = inputs.self + "/wallpapers/gruvified-wallpaper5.png";
-              };
-              plymouth.enable = true;
+            niri."eDP-1".scale = 2.0;
+            sway."eDP-1" = {
+              resolution = "1920x1080";
+              scale = "2";
             };
           };
-        }
-      )
-    ];
+          stylix = {
+            wallpaper = inputs.self + "/wallpapers/gruvified-wallpaper5.png";
+          };
+        };
+      };
+    };
   };
 }

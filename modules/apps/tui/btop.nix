@@ -12,10 +12,9 @@
       cfg = config.mySystem.apps.btop;
     in
     {
-      options.mySystem.apps.btop.enable = lib.mkEnableOption "Neovim Editor";
+      options.mySystem.apps.btop.enable = lib.mkEnableOption "System resource monitor";
 
       config = lib.mkIf cfg.enable {
-        environment.systemPackages = [ pkgs.btop ];
         home-manager.users.shonh.programs.btop.enable = true;
       };
     };

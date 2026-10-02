@@ -18,6 +18,8 @@
       };
 
       config = lib.mkIf cfg.enable {
+        users.users.shonh.extraGroups = [ "docker" ];
+
         virtualisation.docker = {
           enable = true;
 

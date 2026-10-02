@@ -37,10 +37,6 @@
             XDG_SESSION_TYPE = "wayland";
           };
         };
-
-        environment.sessionVariables = {
-          NIXOS_OZONE_WL = "1";
-        };
       };
     };
 }

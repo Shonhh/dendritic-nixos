@@ -1,52 +1,47 @@
-# hosts/nixovm/nixovm.nix
 { inputs, config, ... }:
-
+let
+  mkHost = import ../../lib/mk-host.nix {
+    inherit inputs;
+    nixosModules = config.flake.nixosModules;
+  };
+in
 {
-  flake.nixosConfigurations."nixovm" = inputs.nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    specialArgs = { inherit inputs; };
+  flake.nixosConfigurations."nixovm" = mkHost {
+    hostName = "nixovm";
+    hardware = ./hardware-configuration.nix;
+    configuration = { config, lib, ... }: {
+      system.stateVersion = "25.11";
 
-    modules = [
-      inputs.home-manager.nixosModules.home-manager
-      inputs.stylix.nixosModules.stylix
-    ]
-    ++ (builtins.attrValues config.flake.nixosModules)
-    ++ [
-      ./hardware-configuration.nix
-
-      (
-        { ... }:
+      swapDevices = [
         {
-          networking.hostName = "nixovm";
-          system.stateVersion = "25.11";
-
-          swapDevices = [
-            {
-              device = "/var/lib/swapfile";
-              size = 4096; # 4 GB
-            }
-          ];
-
-          boot.loader.grub.enable = true;
-          boot.loader.grub.device = "/dev/vda";
-          boot.loader.grub.useOSProber = true;
-
-          # Enable various user-defined modules
-          mySystem = {
-            # Turn on the core system
-            system.core.enable = true;
-
-            # Enable Apps
-            apps.foot.enable = true;
-            apps.yazi.enable = true;
-
-            # Define Environment
-            desktop.hyprland.enable = true;
-            desktop.noctalia.enable = true;
-            desktop.stylix.enable = true;
-          };
+          device = "/var/lib/swapfile";
+          size = 4096; # 4 GB
         }
-      )
-    ];
+      ];
+
+      boot.loader.grub.enable = true;
+      boot.loader.grub.device = "/dev/vda";
+      boot.loader.grub.useOSProber = true;
+
+      mySystem.profiles.desktop.enable = true;
+
+      mySystem.desktop.displays = {
+        hyprland = [
+          "Virtual-1,1280x720,auto,1"
+          ",preferred,auto,1"
+        ];
+        niri."Virtual-1" = {
+          mode = {
+            width = 1280;
+            height = 720;
+          };
+          scale = 1.0;
+        };
+        sway."Virtual-1" = {
+          resolution = "1280x720";
+          scale = "1";
+        };
+      };
+    };
   };
 }

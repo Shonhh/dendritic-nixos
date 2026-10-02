@@ -1,166 +1,100 @@
 { inputs, config, ... }:
-
+let
+  mkHost = import ../../lib/mk-host.nix {
+    inherit inputs;
+    nixosModules = config.flake.nixosModules;
+  };
+in
 {
-  flake.nixosConfigurations."omenixos" = inputs.nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    specialArgs = { inherit inputs; };
+  flake.nixosConfigurations."omenixos" = mkHost {
+    hostName = "omenixos";
+    hardware = ./hardware-configuration.nix;
+    configuration = { config, lib, ... }: {
+      system.stateVersion = "25.11";
 
-    modules = [
-      inputs.home-manager.nixosModules.home-manager
-      inputs.stylix.nixosModules.stylix
-    ]
-    ++ (builtins.attrValues config.flake.nixosModules)
-    ++ [
-      ./hardware-configuration.nix
-
-      (
-        { lib, config, ... }:
-        {
-          networking.hostName = "omenixos";
-          system.stateVersion = "25.11";
-
-          # disable stylix limine theming
-          stylix.targets.limine.image.enable = lib.mkIf config.mySystem.desktop.stylix.enable false;
-
-          boot = {
-            loader = {
-              limine = {
-                enable = true;
-                secureBoot.enable = false;
-
-                style = lib.mkIf config.mySystem.desktop.stylix.enable {
-                  wallpapers = lib.mkForce [ ];
-                  backdrop = lib.mkForce config.lib.stylix.colors.base00;
-                  graphicalTerminal.background = lib.mkForce "00${config.lib.stylix.colors.base00}";
-                };
-
-                # chainload Windows
-                extraEntries = ''
-                  /Windows 11
-                      protocol: efi
-                      path: uuid(e6d3d16d-54ea-41e5-88fb-ef2040284a01):/EFI/Microsoft/Boot/bootmgfw.efi
-                      comment: Boot into Windows 11
-                '';
-              };
-
-              timeout = 1;
-              efi.canTouchEfiVariables = true;
-            };
-
-            initrd.systemd.tpm2.enable = false;
-            kernelParams = [
-              # faster boots, mask this system
-              "systemd.mask=dev-tpm0.device"
-              "systemd.mask=dev-tpmrm0.device"
-
-              # minimal startup
-              "quiet"
-              "splash"
-              "boot.shell_on_fail"
-              "loglevel=3"
-              "udev.log_priority=3"
-              "rd.udev.log_level=3"
-              "rd.systemd.show_status=false"
-              "vt.global_cursor_default=0"
-
-              "usbcore.autosuspend=-1"
-              "processor.max_cstate=5"
-            ];
-
-            # minimal startup
-            consoleLogLevel = 0;
-            initrd.verbose = false;
+      boot = {
+        loader = {
+          limine = {
+            # chainload Windows
+            extraEntries = ''
+              /Windows 11
+                  protocol: efi
+                  path: uuid(e6d3d16d-54ea-41e5-88fb-ef2040284a01):/EFI/Microsoft/Boot/bootmgfw.efi
+                  comment: Boot into Windows 11
+            '';
           };
 
-          systemd.tpm2.enable = false;
+          timeout = 1;
+          efi.canTouchEfiVariables = true;
+        };
 
-          # --- 2TB SHARED DRIVE MOUNT ---
-          fileSystems."/mnt/shared" = {
-            device = "/dev/disk/by-uuid/72925CFC925CC66F";
-            fsType = "ntfs3";
-            options = [
-              "rw"
-              "uid=1000"
-              "gid=100"
-              "dmask=0022"
-              "fmask=0133"
+        initrd.systemd.tpm2.enable = false;
+        kernelParams = [
+          # faster boots, mask this system
+          "systemd.mask=dev-tpm0.device"
+          "systemd.mask=dev-tpmrm0.device"
 
-              # Drive mounts when needed, not when booting
-              "noauto"
-              "x-systemd.automount"
-              "x-systemd.idle-timeout=600"
-            ];
+          "usbcore.autosuspend=-1"
+          "processor.max_cstate=5"
+        ];
+      };
+
+      systemd.tpm2.enable = false;
+
+      # --- 2TB SHARED DRIVE MOUNT ---
+      fileSystems."/mnt/shared" = {
+        device = "/dev/disk/by-uuid/72925CFC925CC66F";
+        fsType = "ntfs3";
+        options = [
+          "rw"
+          "uid=1000"
+          "gid=100"
+          "dmask=0022"
+          "fmask=0133"
+
+          # Drive mounts when needed, not when booting
+          "noauto"
+          "x-systemd.automount"
+          "x-systemd.idle-timeout=600"
+        ];
+      };
+
+      # Enable various user-defined modules
+      mySystem = {
+        profiles.workstation.enable = true;
+        system.limine.enable = true;
+        system.quiet-boot.enable = true;
+
+        # Hardware-specific modules
+        hardware.nvidia = {
+          enable = true;
+          package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+        };
+
+        # Enable Apps
+        apps = {
+          obsidian.enable = true;
+          zoom.enable = true;
+          anki.enable = true;
+          codex.enable = true;
+          obs-studio.enable = true;
+          qbittorrent.enable = true;
+          libreoffice.enable = true;
+        };
+
+        games = {
+          ryubing.enable = true;
+          dolphin-emu.enable = true;
+          r2modman.enable = true;
+        };
+
+        # Define Environment
+        desktop = {
+          stylix = {
+            wallpaper = inputs.self + "/wallpapers/gruvified-wallpaper3.png";
           };
-
-          # Enable various user-defined modules
-          mySystem = {
-            # Turn on the core system
-            system = {
-              core.enable = true;
-              flatpak.enable = true;
-              development.enable = true;
-              # docker.enable = true;
-              polkit.enable = true;
-              nixgc.enable = true;
-              rebuild-system.enable = true;
-            };
-
-            # Hardware-specific modules
-            hardware.nvidia = {
-              enable = true;
-              package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
-            };
-            hardware.bluetooth.enable = true;
-
-            # Enable Apps
-            apps = {
-              foot.enable = true;
-              yazi.enable = true;
-              thunar.enable = true;
-              neovim.enable = true;
-              fastfetch.enable = true;
-              git.enable = true;
-              discord.enable = true;
-              zed.enable = true;
-              steam.enable = true;
-              spotify.enable = true;
-              btop.enable = true;
-              obsidian.enable = true;
-              zoom.enable = true;
-              anki.enable = true;
-              thunderbird.enable = true;
-              helium.enable = true;
-              # odysseus.enable = true;
-              codex.enable = true;
-              obs-studio.enable = true;
-              qbittorrent.enable = true;
-              libreoffice.enable = true;
-            };
-
-            games = {
-              minecraft.enable = true;
-              ryubing.enable = true;
-              dolphin-emu.enable = true;
-              r2modman.enable = true;
-              # mindustry.enable = true;
-            };
-
-            # Define Environment
-            desktop = {
-              wm-ctrl.enable = true;
-              hyprland.enable = true;
-              niri.enable = false;
-              swayfx.enable = false;
-              noctalia.enable = true;
-              stylix = {
-                enable = true;
-                wallpaper = inputs.self + "/wallpapers/gruvified-wallpaper3.png";
-              };
-              plymouth.enable = true;
-            };
-          };
-        }
-      )
-    ];
+        };
+      };
+    };
   };
 }

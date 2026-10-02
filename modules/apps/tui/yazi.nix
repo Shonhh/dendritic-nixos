@@ -16,6 +16,7 @@
       options.mySystem.apps.yazi.enable = lib.mkEnableOption "Yazi File Manager";
 
       config = lib.mkIf cfg.enable {
+        mySystem.apps.neovim.enable = lib.mkDefault true;
 
         home-manager.users.shonh = {
 
@@ -56,7 +57,6 @@
               ];
             };
           };
-
         };
       };
     };

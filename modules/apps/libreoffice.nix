@@ -1,7 +1,7 @@
 { ... }:
 
 {
-  flake.nixosModules.anki =
+  flake.nixosModules.libreoffice =
     {
       config,
       lib,

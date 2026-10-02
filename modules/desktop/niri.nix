@@ -6,11 +6,12 @@
       config,
       lib,
       pkgs,
-      inputs, # 1. Added inputs here to grab the flake
+      inputs,
       ...
     }:
     let
       cfg = config.mySystem.desktop.niri;
+      commands = config.mySystem.desktop.commands;
     in
     {
       options.mySystem.desktop.niri.enable = lib.mkEnableOption "Niri Scrollable Wayland Compositor";
@@ -28,15 +29,8 @@
           extra-trusted-public-keys = [ "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" ];
         };
 
-        xdg.portal = {
-          enable = true;
-          extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-          config.common.default = "*";
-        };
-
         # --- User Level Setup ---
         home-manager.users.shonh = {
-          # 3. IMPORT THE FLAKE'S HOME MANAGER MODULE HERE
           imports = [ inputs.niri.homeModules.niri ];
 
           programs.niri = {
@@ -67,18 +61,7 @@
               };
 
               # Monitors
-              outputs = {
-                "Virtual-1" = {
-                  mode = {
-                    width = 1280;
-                    height = 720;
-                  };
-                  scale = 1.0;
-                };
-                "eDP-1" = {
-                  scale = 2.0;
-                };
-              };
+              outputs = config.mySystem.desktop.displays.niri;
 
               # Layout
               layout = {
@@ -157,41 +140,9 @@
                   "Mod+0".action."focus-workspace" = 10;
                   "Mod+Shift+0".action."move-window-to-workspace" = 10;
 
-                  "Mod+T".action.spawn = uwsm "foot";
-                  "Mod+F".action.spawn = uwsm "helium";
-                  "Mod+E".action.spawn = uwsm "thunar";
-                  "Mod+C".action.spawn = uwsm "zeditor";
-                  "Mod+N".action.spawn = uwsm "obsidian";
-
-                  "Mod+D".action.spawn = uwsm "discord";
-                  "Mod+S".action.spawn = uwsm "spotify";
-                  "Mod+G".action.spawn = uwsm "steam";
-                  "Mod+Shift+G".action.spawn = [ "steam-console" ];
-
                   "Mod+Delete".action.quit = [ ];
                   "Mod+Q".action."close-window" = [ ];
                   "Mod+Shift+F".action."maximize-column" = [ ];
-                  "Mod+P".action.spawn = [
-                    "noctalia-shell"
-                    "ipc"
-                    "call"
-                    "plugin:screenshot"
-                    "takeScreenshot"
-                    "region"
-                  ];
-
-                  "Ctrl+Alt+W".action.spawn = [
-                    "sh"
-                    "-c"
-                    "noctalia-shell kill || uwsm-app -- noctalia-shell"
-                  ];
-                  "Mod+A".action.spawn = [
-                    "noctalia-shell"
-                    "ipc"
-                    "call"
-                    "launcher"
-                    "toggle"
-                  ];
 
                   "Mod+Left".action."focus-column-left" = [ ];
                   "Mod+Right".action."focus-column-right" = [ ];
@@ -224,19 +175,57 @@
                     "@DEFAULT_AUDIO_SINK@"
                     "toggle"
                   ];
+                }
+                // lib.optionalAttrs config.mySystem.apps.foot.enable {
+                  "Mod+T".action.spawn = uwsm commands.terminal;
+                }
+                // lib.optionalAttrs config.mySystem.apps.helium.enable {
+                  "Mod+F".action.spawn = uwsm commands.browser;
+                }
+                // lib.optionalAttrs config.mySystem.apps.thunar.enable {
+                  "Mod+E".action.spawn = uwsm commands.fileManager;
+                }
+                // lib.optionalAttrs config.mySystem.apps.zed.enable {
+                  "Mod+C".action.spawn = uwsm commands.codeEditor;
+                }
+                // lib.optionalAttrs config.mySystem.apps.obsidian.enable {
+                  "Mod+N".action.spawn = uwsm "obsidian";
+                }
+                // lib.optionalAttrs config.mySystem.apps.discord.enable {
+                  "Mod+D".action.spawn = uwsm "discord";
+                }
+                // lib.optionalAttrs config.mySystem.apps.spotify.enable {
+                  "Mod+S".action.spawn = uwsm "spotify";
+                }
+                // lib.optionalAttrs config.mySystem.apps.steam.enable {
+                  "Mod+G".action.spawn = uwsm "steam";
+                  "Mod+Shift+G".action.spawn = [ "steam-console" ];
+                }
+                // lib.optionalAttrs config.mySystem.desktop.noctalia.enable {
+                  "Mod+P".action.spawn = [
+                    "sh"
+                    "-c"
+                    commands.screenshot
+                  ];
+                  "Ctrl+Alt+W".action.spawn = [
+                    "sh"
+                    "-c"
+                    commands.barToggle
+                  ];
+                  "Mod+A".action.spawn = [
+                    "sh"
+                    "-c"
+                    commands.launcher
+                  ];
                   "XF86MonBrightnessUp".action.spawn = [
-                    "noctalia-shell"
-                    "ipc"
-                    "call"
-                    "brightness"
-                    "increase"
+                    "sh"
+                    "-c"
+                    commands.brightnessUp
                   ];
                   "XF86MonBrightnessDown".action.spawn = [
-                    "noctalia-shell"
-                    "ipc"
-                    "call"
-                    "brightness"
-                    "decrease"
+                    "sh"
+                    "-c"
+                    commands.brightnessDown
                   ];
                 };
             };

@@ -25,7 +25,6 @@
       };
 
       config = lib.mkIf cfg.enable {
-        environment.systemPackages = [ pkgs.foot ];
 
         home-manager.users.shonh = {
           stylix.targets.foot.enable = false;

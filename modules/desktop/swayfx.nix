@@ -10,6 +10,7 @@
     }:
     let
       cfg = config.mySystem.desktop.swayfx;
+      commands = config.mySystem.desktop.commands;
       modifier = "Mod4"; # SUPER key
     in
     {
@@ -23,12 +24,6 @@
           package = pkgs.swayfx;
         };
         programs.uwsm.enable = true;
-
-        xdg.portal = {
-          enable = true;
-          extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-          config.common.default = "*";
-        };
 
         # Make sure the autotiling daemon is available
         environment.systemPackages = [ pkgs.autotiling ];
@@ -46,7 +41,7 @@
             config = {
               inherit modifier;
 
-              terminal = "foot";
+              terminal = commands.terminal;
 
               # Replaces general.gaps_in and general.gaps_out
               gaps = {
@@ -55,19 +50,7 @@
               };
 
               # Monitors (Outputs)
-              output = {
-                "Virtual-1" = {
-                  resolution = "1280x720";
-                  scale = "1";
-                };
-                "eDP-1" = {
-                  resolution = "1920x1080";
-                  scale = "2";
-                }; # Specify your actual resolution here
-                "*" = {
-                  resolution = "1920x1080";
-                }; # Default fallback
-              };
+              output = config.mySystem.desktop.displays.sway;
 
               # Input configuration
               input = {
@@ -151,26 +134,14 @@
                 in
                 {
                   # Core Apps
-                  "${modifier}+t" = uwsm "foot";
-                  "${modifier}+f" = uwsm "helium";
-                  "${modifier}+e" = uwsm "thunar";
-                  "${modifier}+c" = uwsm "zeditor";
-                  "${modifier}+n" = uwsm "obsidian";
 
                   # Specific Workspaces
-                  "${modifier}+d" = "workspace discord";
-                  "${modifier}+s" = "workspace spotify";
-                  "${modifier}+g" = "exec swaymsg workspace 10 && uwsm-app -- steam";
-                  "${modifier}+Shift+g" = "exec steam-console"; # Assuming this handles Sway logic internally now
 
                   # Desktop State
                   "${modifier}+Delete" = "exec swaynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'";
-                  "Control+Mod1+w" = "exec sh -c 'noctalia-shell kill || uwsm-app -- noctalia-shell'";
-                  "${modifier}+a" = "exec noctalia-shell ipc call launcher toggle";
                   "${modifier}+q" = "kill";
                   "${modifier}+w" = "floating toggle";
                   "${modifier}+Shift+f" = "fullscreen toggle";
-                  "${modifier}+p" = "exec noctalia-shell ipc call plugin:screenshot takeScreenshot region";
                   "${modifier}+j" = "layout toggle split";
 
                   # Movement
@@ -195,13 +166,43 @@
                   "XF86AudioLowerVolume" = "exec --locked wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
                   "XF86AudioMute" = "exec --locked wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
                   "XF86AudioMicMute" = "exec --locked wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
-                  "XF86MonBrightnessUp" = "exec --locked noctalia-shell ipc call brightness increase";
-                  "XF86MonBrightnessDown" = "exec --locked noctalia-shell ipc call brightness decrease";
 
                   "XF86AudioNext" = "exec --locked playerctl next";
                   "XF86AudioPause" = "exec --locked playerctl play-pause";
                   "XF86AudioPlay" = "exec --locked playerctl play-pause";
                   "XF86AudioPrev" = "exec --locked playerctl previous";
+                }
+                // lib.optionalAttrs config.mySystem.apps.foot.enable {
+                  "${modifier}+t" = uwsm commands.terminal;
+                }
+                // lib.optionalAttrs config.mySystem.apps.helium.enable {
+                  "${modifier}+f" = uwsm commands.browser;
+                }
+                // lib.optionalAttrs config.mySystem.apps.thunar.enable {
+                  "${modifier}+e" = uwsm commands.fileManager;
+                }
+                // lib.optionalAttrs config.mySystem.apps.zed.enable {
+                  "${modifier}+c" = uwsm commands.codeEditor;
+                }
+                // lib.optionalAttrs config.mySystem.apps.obsidian.enable {
+                  "${modifier}+n" = uwsm "obsidian";
+                }
+                // lib.optionalAttrs config.mySystem.apps.discord.enable {
+                  "${modifier}+d" = "workspace discord";
+                }
+                // lib.optionalAttrs config.mySystem.apps.spotify.enable {
+                  "${modifier}+s" = "workspace spotify";
+                }
+                // lib.optionalAttrs config.mySystem.apps.steam.enable {
+                  "${modifier}+g" = "exec swaymsg workspace 10 && uwsm-app -- steam";
+                  "${modifier}+Shift+g" = "exec steam-console"; # Assuming this handles Sway logic internally now
+                }
+                // lib.optionalAttrs config.mySystem.desktop.noctalia.enable {
+                  "Control+Mod1+w" = "exec ${commands.barToggle}";
+                  "${modifier}+a" = "exec ${commands.launcher}";
+                  "${modifier}+p" = "exec ${commands.screenshot}";
+                  "XF86MonBrightnessUp" = "exec --locked ${commands.brightnessUp}";
+                  "XF86MonBrightnessDown" = "exec --locked ${commands.brightnessDown}";
                 }
               );
             };

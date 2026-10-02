@@ -1,5 +1,4 @@
 { ... }:
-
 {
   flake.nixosModules.core =
     {
@@ -8,139 +7,49 @@
       pkgs,
       ...
     }:
-    let
-      cfg = config.mySystem.system.core;
-    in
     {
-      options.mySystem.system.core.enable = lib.mkEnableOption "Core System Settings";
+      options.mySystem.system.core = {
+        enable = lib.mkEnableOption "Base system settings";
+      };
 
-      config = lib.mkIf cfg.enable {
-
-        # --- Flakes & Nix Settings ---
+      config = lib.mkIf config.mySystem.system.core.enable {
         nix.settings = {
           experimental-features = [
             "nix-command"
             "flakes"
           ];
-
-          download-buffer-size = 536870912; # 512 MB
-
-          cores = 0; # use all available logical cores
+          download-buffer-size = 536870912;
+          cores = 0;
           max-jobs = "auto";
         };
-
         nixpkgs.config.allowUnfree = true;
-
-        # --- Kernel ---
-        boot.kernelPackages = pkgs.linuxPackages_zen;
-        boot.kernelModules = [ "ntsync" ];
-
-        # --- Networking ---
+        # Retained from the original configuration; review when its consumer is updated.
+        nixpkgs.config.permittedInsecurePackages = [ "pnpm-10.29.2" ];
         networking.networkmanager.enable = true;
-
-        # --- Time & Locale ---
-        time.timeZone = "America/Chicago";
-        i18n.defaultLocale = "en_US.UTF-8";
-        i18n.extraLocaleSettings = {
-          LC_ADDRESS = "en_US.UTF-8";
-          LC_IDENTIFICATION = "en_US.UTF-8";
-          LC_MEASUREMENT = "en_US.UTF-8";
-          LC_MONETARY = "en_US.UTF-8";
-          LC_NAME = "en_US.UTF-8";
-          LC_NUMERIC = "en_US.UTF-8";
-          LC_PAPER = "en_US.UTF-8";
-          LC_TELEPHONE = "en_US.UTF-8";
-          LC_TIME = "en_US.UTF-8";
-        };
-
-        # --- X11 & Login Manager ---
-        services.xserver.enable = true;
-        mySystem.system.tuigreet.enable = true;
-        services.xserver.xkb = {
-          layout = "us";
-          variant = "";
-        };
-
-        # --- Services (Printing & Audio) ---
-        services = {
-          printing.enable = true;
-          pulseaudio.enable = false;
-          pipewire = {
-            enable = true;
-            alsa.enable = true;
-            alsa.support32Bit = true;
-            pulse.enable = true;
-          };
-
-          fstrim.enable = true;
-        };
-
-        security.rtkit.enable = true;
-
-        # --- ZRAM (Swap Replacement) ---
+        time.timeZone = lib.mkDefault "America/Chicago";
+        i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
+        i18n.extraLocaleSettings = lib.genAttrs [
+          "LC_ADDRESS"
+          "LC_IDENTIFICATION"
+          "LC_MEASUREMENT"
+          "LC_MONETARY"
+          "LC_NAME"
+          "LC_NUMERIC"
+          "LC_PAPER"
+          "LC_TELEPHONE"
+          "LC_TIME"
+        ] (_: "en_US.UTF-8");
+        services.fstrim.enable = true;
         zramSwap = {
           enable = true;
           memoryPercent = 50;
         };
-
-        # --- User Account ---
-        users.users.shonh = {
-          isNormalUser = true;
-          description = "Shonh";
-          extraGroups = [
-            "networkmanager"
-            "wheel"
-            "i2c"
-            "docker"
-          ];
-        };
-
-        # --- Home Manager Base ---
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          backupFileExtension = "backup";
-
-          users.shonh = {
-            home.sessionVariables = {
-              TERMINAL = "foot";
-              EDITOR = "nvim";
-              BROWSER = "helium";
-            };
-
-            home.stateVersion = "25.11";
-          };
-        };
-
-        # --- Base Applications ---
         environment.systemPackages = with pkgs; [
           tree
-          sl
-          cmatrix
-          cbonsai
           wget
           unzip
-          vlc
-          kdePackages.filelight
           efibootmgr
         ];
-
-        nixpkgs.config.permittedInsecurePackages = [
-          "pnpm-10.29.2"
-        ];
-
-        # --- Default Applications ---
-        # xdg.mimeApps = {
-        #   enable = true;
-        #   defaultApplications = {
-        #     "text/html" = "vivaldi-stable.desktop";
-        #     "x-scheme-handler/http" = "vivaldi-stable.desktop";
-        #     "x-scheme-handler/https" = "vivaldi-stable.desktop";
-        #     "x-scheme-handler/about" = "vivaldi-stable.desktop";
-        #     "x-scheme-handler/unknown" = "vivaldi-stable.desktop";
-        #     "inode/directory" = "thunar.desktop";
-        #   };
-        # };
       };
     };
 }

@@ -27,7 +27,7 @@
 
         systemd.services.greetd.serviceConfig = {
           StandardOutput = "journal";
-          StandrdError = "journal";
+          StandardError = "journal";
         };
       };
     };

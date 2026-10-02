@@ -11,6 +11,7 @@
     }:
     let
       cfg = config.mySystem.desktop.noctalia;
+      repositoryDirectory = config.mySystem.repository.directory;
     in
     {
       options.mySystem.desktop.noctalia.enable = lib.mkEnableOption "Noctalia Shell";
@@ -27,10 +28,6 @@
           ];
         };
 
-        # Services used by Noctalia for battery, power, and Bluetooth data.
-        mySystem.system.power-management.enable = true;
-        mySystem.hardware.bluetooth.enable = true;
-
         # Secret Service provider used by Noctalia.
         services.gnome.gnome-keyring.enable = true;
 
@@ -46,7 +43,7 @@
           let
             # This remains outside the Nix store so Noctalia can write GUI
             # changes directly into the Git working tree.
-            noctaliaRepo = "${config.home.homeDirectory}/nixos/modules/desktop/noctalia";
+            noctaliaRepo = "${config.home.homeDirectory}/${repositoryDirectory}/modules/desktop/noctalia";
           in
           {
             imports = [

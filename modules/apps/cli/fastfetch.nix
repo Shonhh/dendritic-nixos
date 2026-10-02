@@ -15,7 +15,6 @@
       options.mySystem.apps.fastfetch.enable = lib.mkEnableOption "Personalized Fastfetch";
 
       config = lib.mkIf cfg.enable {
-        environment.systemPackages = [ pkgs.fastfetch ];
 
         home-manager.users.shonh.programs.fastfetch = {
           enable = true;

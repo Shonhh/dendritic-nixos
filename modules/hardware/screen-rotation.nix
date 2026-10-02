@@ -23,6 +23,7 @@
         # Start screen rotation with the graphical session
         systemd.user.services.iio-hyprland = {
           description = "Automatic Screen Rotation for Hyprland";
+          unitConfig.ConditionEnvironment = "HYPRLAND_INSTANCE_SIGNATURE";
 
           wantedBy = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
@@ -30,7 +31,7 @@
 
           # iio-hyprland invokes hyprctl and jq internally
           path = with pkgs; [
-            hyprland
+            config.programs.hyprland.package
             jq
           ];
 
