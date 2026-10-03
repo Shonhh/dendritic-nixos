@@ -25,6 +25,8 @@ case "$action" in
     exit 0
     ;;
   update)
+    flatpak update
+    echo "Flatpaks updated."
     nix flake update
     echo "Inputs updated. Review flake.lock, then run nrs build or nrs switch."
     exit 0
