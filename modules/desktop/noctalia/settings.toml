@@ -21,6 +21,9 @@ widget_spacing = 8
 [battery]
 warning_threshold = 20
 
+[control_center.calendar]
+show_events_card = false
+
 [desktop_widgets]
 enabled = false
 schema_version = 2

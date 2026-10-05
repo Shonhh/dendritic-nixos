@@ -49,6 +49,7 @@
           wget
           unzip
           efibootmgr
+          p7zip
         ];
       };
     };
