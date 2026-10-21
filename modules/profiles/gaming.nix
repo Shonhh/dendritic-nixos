@@ -15,7 +15,7 @@
 
             # Emulators
             dolphin-emu.enable = lib.mkDefault true;
-            ryubing.enable = lib.mkDefault true;
+            eden.enable = lib.mkDefault true;
 
             # Mods
             r2modman.enable = lib.mkDefault true;

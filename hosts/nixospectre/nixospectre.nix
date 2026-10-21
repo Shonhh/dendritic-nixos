@@ -54,6 +54,7 @@ in
 
         # Define Environment
         desktop = {
+          niri.enable = true;
           displays = {
             hyprland = [
               "eDP-1,preferred,auto,2"

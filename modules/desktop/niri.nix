@@ -20,7 +20,7 @@
         # --- System Level Setup ---
         programs.niri = {
           enable = true;
-          package = inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
+          package = pkgs.niri;
         };
         programs.uwsm.enable = true;
 
@@ -35,6 +35,7 @@
 
           programs.niri = {
             enable = true;
+            package = config.programs.niri.package;
 
             settings = {
               # Strip ugly titlebars
