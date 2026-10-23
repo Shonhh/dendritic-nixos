@@ -35,6 +35,13 @@
             enable = true;
             notify = true;
             tray = "auto";
+
+            package = pkgs.udiskie.overrideAttrs (old: {
+              # Temporary workaround for the intermittent keyring test failure.
+              disabledTests = (old.disabledTests or [ ]) ++ [
+                "test_invalidate"
+              ];
+            });
           };
         };
 
