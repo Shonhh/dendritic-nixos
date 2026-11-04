@@ -20,7 +20,16 @@
       };
 
       config = lib.mkIf cfg.enable {
-        home-manager.users.shonh.home.packages = [ helium ];
+        home-manager.users.shonh = {
+          home.packages = [ helium ];
+
+          # Register Widevine CDM for Helium.
+          xdg.configFile."net.imput.helium/WidevineCdm/latest-component-updated-widevine-cdm".text =
+            builtins.toJSON
+              {
+                Path = "${pkgs.widevine-cdm}/share/google/chrome/WidevineCdm";
+              };
+        };
       };
     };
 }
