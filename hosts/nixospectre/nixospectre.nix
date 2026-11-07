@@ -29,6 +29,12 @@ in
         };
       };
 
+      # Camera
+      hardware.ipu6 = {
+        enable = true;
+        platform = "ipu6";
+      };
+
       # Enable various user-defined modules
       mySystem = {
         profiles.workstation.enable = true;

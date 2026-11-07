@@ -60,10 +60,13 @@
         home-manager.users.shonh = {
           wayland.windowManager.hyprland = {
             enable = true;
+            package = null;
+            portalPackage = null;
             systemd.enable = false;
-            configType = "hyprlang";
 
-            settings = lib.mkMerge [
+            configType = "lua";
+
+            extraConfig = lib.concatStringsSep "\n" [
               (import ../../config/hyprland/settings.nix {
                 inherit config lib commands;
               })

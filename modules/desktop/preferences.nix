@@ -64,10 +64,19 @@
           extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
           config.common.default = "*";
         };
-        home-manager.users.shonh.home.sessionVariables =
-          lib.optionalAttrs apps.foot.enable { TERMINAL = cfg.commands.terminal; }
-          // lib.optionalAttrs apps.neovim.enable { EDITOR = cfg.commands.editor; }
-          // lib.optionalAttrs apps.helium.enable { BROWSER = cfg.commands.browser; };
+
+        home-manager.users.shonh = {
+          xdg.portal = {
+            enable = lib.mkForce true;
+            extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+            config.common.default = "*";
+          };
+
+          home.sessionVariables =
+            lib.optionalAttrs apps.foot.enable { TERMINAL = cfg.commands.terminal; }
+            // lib.optionalAttrs apps.neovim.enable { EDITOR = cfg.commands.editor; }
+            // lib.optionalAttrs apps.helium.enable { BROWSER = cfg.commands.browser; };
+        };
       };
     };
 }
