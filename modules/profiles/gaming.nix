@@ -16,6 +16,7 @@
             # Emulators
             dolphin-emu.enable = lib.mkDefault true;
             eden.enable = lib.mkDefault true;
+            lichii.enable = lib.mkDefault true;
 
             # Mods
             r2modman.enable = lib.mkDefault true;

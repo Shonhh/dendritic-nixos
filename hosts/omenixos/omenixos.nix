@@ -81,6 +81,8 @@ in
           qbittorrent.enable = true;
         };
 
+        games.lichii.enable = false;
+
         # Define Environment
         desktop = {
           stylix = {
