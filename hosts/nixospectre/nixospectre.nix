@@ -61,20 +61,26 @@ in
         # Define Environment
         desktop = {
           niri.enable = true;
+
           displays = {
             hyprland = [
               "eDP-1,preferred,auto,2"
               ",preferred,auto,1"
             ];
+
+            hyprlandDefaultWorkspaces = {
+              "eDP-1" = 3; # Normal workspace 1
+            };
+
             niri."eDP-1".scale = 2.0;
+
             sway."eDP-1" = {
               resolution = "1920x1080";
               scale = "2";
             };
           };
-          stylix = {
-            wallpaper = inputs.self + "/wallpapers/gruvified-wallpaper5.png";
-          };
+
+          stylix.wallpaper = inputs.self + "/wallpapers/gruvified-wallpaper5.png";
         };
       };
     };

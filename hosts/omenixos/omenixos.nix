@@ -85,9 +85,20 @@ in
 
         # Define Environment
         desktop = {
-          stylix = {
-            wallpaper = inputs.self + "/wallpapers/gruvified-wallpaper3.png";
+          displays = {
+            hyprland = [
+              "HDMI-A-1,1920x1080@60,0x0,1"
+              "DP-1,1920x1080@200,1920x0,1"
+              ",preferred,auto,1"
+            ];
+
+            hyprlandDefaultWorkspaces = {
+              "HDMI-A-1" = 3; # Normal workspace 1
+              "DP-1" = 4; # Normal workspace 2
+            };
           };
+
+          stylix.wallpaper = inputs.self + "/wallpapers/gruvified-wallpaper3.png";
         };
       };
     };

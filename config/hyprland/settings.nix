@@ -73,9 +73,19 @@ in
 ''
   hl.config(${lua settings})
 
+  -- Apply host-specific startup workspaces
+  for output, workspace in pairs(${lua config.mySystem.desktop.displays.hyprlandDefaultWorkspaces}) do
+      hl.workspace_rule({
+          workspace = tostring(workspace),
+          monitor = output,
+          default = true,
+      })
+  end
+
   -- Keep using the monitor strings already defined in your hosts.
   do
       local monitors = ${lua config.mySystem.desktop.displays.hyprland}
+      local nextDefaultWorkspace = 3
 
       for _, specification in ipairs(monitors) do
           local fields = {}
@@ -105,6 +115,16 @@ in
                   end
                   rule[fields[i]] = value
               end
+          end
+
+          if not rule.disabled and rule.output ~= "" then
+              hl.workspace_rule({
+                  workspace = tostring(nextDefaultWorkspace),
+                  monitor = rule.output,
+                  default = true,
+              })
+
+              nextDefaultWorkspace = nextDefaultWorkspace + 1
           end
 
           hl.monitor(rule)

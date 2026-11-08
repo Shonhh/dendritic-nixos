@@ -42,6 +42,13 @@
             default = [ ",preferred,auto,1" ];
             description = "Host-specific Hyprland monitor declarations.";
           };
+
+          hyprlandDefaultWorkspaces = lib.mkOption {
+            type = lib.types.attrsOf lib.types.ints.positive;
+            default = { };
+            description = "Default workspace IDs, keyed by Hyprland monitor name.";
+          };
+
           niri = lib.mkOption {
             type = lib.types.attrsOf lib.types.anything;
             default = { };
