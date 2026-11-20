@@ -38,9 +38,11 @@
                 adjust =
                   saturation: brightness: hex:
                   let
-                    channels = map
-                      (offset: lib.fromHexString (builtins.substring offset 2 hex))
-                      [ 0 2 4 ];
+                    channels = map (offset: lib.fromHexString (builtins.substring offset 2 hex)) [
+                      0
+                      2
+                      4
+                    ];
 
                     lowest = lib.foldl' lib.min 255 channels;
                     highest = lib.foldl' lib.max 0 channels;
@@ -66,8 +68,7 @@
 
                 accentSource = adjust 1.75 1.12 palette.base0E;
                 accent = "oklch(from ${accentSource} l c calc(h - 55))";
-                accentHover =
-                  "oklch(from ${accentSource} calc(l + 0.05) c calc(h - 55))";
+                accentHover = "oklch(from ${accentSource} calc(l + 0.05) c calc(h - 55))";
 
                 onAccent = background;
               in
