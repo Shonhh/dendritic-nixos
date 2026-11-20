@@ -194,10 +194,7 @@
                   uiForeground = brighten palette.base05;
                   uiMuted = brighten palette.base04;
 
-                  uiSurface =
-                    if config.stylix.polarity == "dark"
-                    then darken palette.base01
-                    else c.base01;
+                  uiSurface = if config.stylix.polarity == "dark" then darken palette.base01 else c.base01;
                 in
                 {
                   "Base16 ${palette.scheme-name}" = {

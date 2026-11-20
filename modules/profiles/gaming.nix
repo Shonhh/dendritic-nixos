@@ -10,8 +10,9 @@
           # Game Launcher
           apps.steam.enable = lib.mkDefault true;
           games = {
-            # Game Binaries
+            # Game Binaries/Launchers
             minecraft.enable = lib.mkDefault true;
+            mkw-recomp.enable = true;
 
             # Emulators
             dolphin-emu.enable = lib.mkDefault true;

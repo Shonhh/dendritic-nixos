@@ -81,7 +81,13 @@ in
           qbittorrent.enable = true;
         };
 
-        games.lichii.enable = false;
+        games = {
+          lichii.enable = false;
+          mkw-recomp = {
+            enable = true;
+            gameDirectory = "/mnt/shared/Game Downloads/mkw-recomp";
+          };
+        };
 
         # Define Environment
         desktop = {

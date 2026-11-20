@@ -35,7 +35,6 @@
               let
                 palette = config.lib.stylix.colors;
 
-                # Same RGB adjustment as your Zed configuration.
                 adjust =
                   saturation: brightness: hex:
                   let
@@ -47,7 +46,8 @@
                     highest = lib.foldl' lib.max 0 channels;
                     midpoint = (lowest + highest) / 2.0;
 
-                    channelHex = channel:
+                    channelHex =
+                      channel:
                       let
                         saturated = midpoint + (channel - midpoint) * saturation;
                         value = builtins.floor (saturated * brightness);
@@ -64,8 +64,11 @@
                 foreground = adjust 1.0 1.12 palette.base05;
                 secondary = adjust 1.0 1.12 palette.base04;
 
-                accent = adjust 1.75 1.12 palette.base0E;
-                accentHover = adjust 1.75 1.25 palette.base0E;
+                accentSource = adjust 1.75 1.12 palette.base0E;
+                accent = "oklch(from ${accentSource} l c calc(h - 55))";
+                accentHover =
+                  "oklch(from ${accentSource} calc(l + 0.05) c calc(h - 55))";
+
                 onAccent = background;
               in
               ''
@@ -87,7 +90,7 @@
                   --background-surface-higher: ${raised} !important;
                   --background-surface-highest: ${raised} !important;
 
-                  /* Readable text and navigation controls. */
+                  /* Text and navigation controls. */
                   --text-normal: ${foreground} !important;
                   --text-default: ${foreground} !important;
                   --text-primary: ${foreground} !important;
@@ -112,17 +115,46 @@
                   --input-background-default: ${surface} !important;
                   --textbox-markdown-syntax: ${secondary} !important;
 
-                  /* Accents remain derived from the selected Stylix scheme. */
-                  --text-link: ${accent} !important;
+                  /* Purple brand surfaces and controls. */
+                  --bg-brand: ${accent} !important;
+                  --background-brand: ${accent} !important;
+                  --background-accent: ${accent} !important;
                   --control-brand-foreground: ${accent} !important;
                   --brand-500: ${accent} !important;
                   --brand-560: ${accentHover} !important;
+
                   --button-filled-brand-background: ${accent} !important;
                   --button-filled-brand-background-hover: ${accentHover} !important;
                   --button-filled-brand-text: ${onAccent} !important;
+
+                  --button-brand-background: ${accent} !important;
+                  --button-brand-background-hover: ${accentHover} !important;
+                  --button-brand-background-active: ${accentHover} !important;
+
+                  /* Positive buttons used by Discord and Vencord. */
+                  --button-positive-background: ${accent} !important;
+                  --button-positive-background-hover: ${accentHover} !important;
+                  --button-positive-background-active: ${accentHover} !important;
+
+                  --button-filled-positive-background: ${accent} !important;
+                  --button-filled-positive-background-hover: ${accentHover} !important;
+                  --button-filled-positive-text: ${onAccent} !important;
+
+                  --redesign-button-positive-background: ${accent} !important;
+                  --redesign-button-positive-text: ${onAccent} !important;
                 }
 
-                /* Explicit composer fixes where component styling wins. */
+                /* Fallback for the older green button component. */
+                #app-mount [class*="lookFilled_"][class*="colorGreen_"] {
+                  background-color: ${accent} !important;
+                  color: ${onAccent} !important;
+                }
+
+                #app-mount [class*="lookFilled_"][class*="colorGreen_"]:hover {
+                  background-color: ${accentHover} !important;
+                }
+
+                /* Composer background, placeholder, and entered text. */
                 [class*="channelTextArea_"] {
                   background: ${surface} !important;
                 }
@@ -136,15 +168,37 @@
                   color: ${foreground} !important;
                 }
 
-                /* Dark Discord home button instead of a pastel filled tile. */
-                [data-list-item-id="guildsnav___home"] {
-                  background: ${surface} !important;
-                  color: ${accent} !important;
+                /* Home button: purple tile with a cream Discord logo. */
+                #app-mount [data-list-item-id="guildsnav___home"] {
+                  background: transparent !important;
                 }
 
-                [data-list-item-id="guildsnav___home"]:hover {
-                  background: ${raised} !important;
-                  color: ${accentHover} !important;
+                #app-mount [data-list-item-id="guildsnav___home"] [class*="childWrapper"] {
+                  background: ${accent} !important;
+                  color: ${foreground} !important;
+                }
+
+                #app-mount [data-list-item-id="guildsnav___home"]:hover [class*="childWrapper"] {
+                  background: ${accentHover} !important;
+                  color: ${foreground} !important;
+                }
+
+                #app-mount [data-list-item-id="guildsnav___home"] svg,
+                #app-mount [data-list-item-id="guildsnav___home"] svg path {
+                  color: ${foreground} !important;
+                  fill: ${foreground} !important;
+                }
+
+                /* Small text badges, including NEW and bot/official labels. */
+                #app-mount [class*="textBadge"],
+                #app-mount [class*="newBadge"],
+                #app-mount [class*="botTag"] {
+                  background: ${accent} !important;
+                  color: ${onAccent} !important;
+                }
+
+                #app-mount [class*="botTag"] svg {
+                  color: ${onAccent} !important;
                 }
               '';
 
