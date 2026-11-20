@@ -24,6 +24,8 @@
           ];
         };
 
+        programs.xfconf.enable = true;
+
         services = {
           gvfs.enable = true; # Enables Trash, USB mounting, and network drives
           tumbler.enable = true; # Enables image and video thumbnails
@@ -31,6 +33,12 @@
         };
 
         home-manager.users.shonh = {
+          xfconf.settings.thunar = {
+            "last-menubar-visible" = false;
+            "last-toolbar-visible" = true;
+            "last-statusbar-visible" = true;
+          };
+
           services.udiskie = {
             enable = true;
             notify = true;

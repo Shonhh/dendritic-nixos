@@ -1,21 +1,22 @@
 config_version = 19
 
 [bar.default]
-background_opacity = 0.79999998211860657
-capsule = true
-capsule_opacity = 0.4999999888241291
-capsule_padding = 3.0
+background_opacity = 1.00
+capsule = false
+capsule_opacity = 0.0
+capsule_padding = 4
+capsule_border = ""
 capsule_radius = 6
 center = [ "workspaces" ]
-end = [ "tray", "notifications", "bluetooth", "network", "battery", "volume", "brightness", "clock", "session" ]
-font_family = "FiraCode Nerd Font"
+contact_shadow = false
+end = [ "tray", "notifications", "network", "bluetooth", "volume", "brightness", "battery", "clock", "session" ]
 font_weight = 400
 margin_edge = 0
 margin_ends = 0
 panel_overlap = 0
 radius = 0
 shadow = false
-start = [ "control-center", "launcher", "sysmon", "media", "clipboard" ]
+start = [ "control-center", "left-gap", "launcher", "left-gap", "clipboard", "left-gap", "sysmon", "left-gap", "media" ]
 widget_spacing = 8
 
 [battery]
@@ -153,7 +154,6 @@ widget_order = [ "lockscreen-login-box@DP-1", "lockscreen-login-box@HDMI-A-1", "
         show_weather = true
 
 [shell]
-font_family = "FiraCode Nerd Font"
 launch_apps_custom_command = "uwsm-app -- $CMD"
 settings_show_advanced = true
 settings_window_translucent = true
@@ -174,11 +174,33 @@ settings_window_translucent = true
     directory = "~/Pictures/Screenshots"
     save_to_file = false
 
+    [shell.launcher]
+    width = 640
+
+[osd]
+position = "top_center"
+orientation = "horizontal"
+offset_y = 48
+hide_delay_ms = 1200
+background_opacity = 0.94
+border = true
+border_color = "outline_variant"
+border_width = 1.0
+follow_focused_output = true
+
+[notification]
+position = "top_right"
+offset_x = 8
+offset_y = 8
+width = 360
+background_opacity = 0.94
+border = true
+border_color = "outline_variant"
+border_width = 1.0
+follow_focused_output = true
+
 [theme]
-builtin = "Gruvbox"
-community_palette = "Oxocarbon"
 mode = "dark"
-source = "builtin"
 wallpaper_scheme = "m3-content"
 
 [wallpaper]
@@ -188,74 +210,34 @@ enabled = false
 unit = "imperial"
 
 [widget.battery]
-capsule = true
-capsule_opacity = 0.5
 display_mode = "graphic"
 
-[widget.bluetooth]
-capsule = true
-capsule_opacity = 0.0
-capsule_padding = 0
-
 [widget.clock]
-capsule = true
-capsule_opacity = 0.0
-capsule_padding = 0
-capsule_radius = 6
 format = "{:%I:%M %p}"
 
 [widget.control-center]
-capsule = true
-capsule_opacity = 0.0
-capsule_padding = 0
 glyph = "grid-dots"
 
-[widget.launcher]
-capsule = true
-capsule_opacity = 0.0
-capsule_padding = 3
-
 [widget.media]
-capsule_opacity = 0.5
-capsule_radius = 6
 title_scroll = "on_hover"
 
-[widget.network]
-capsule = true
-capsule_opacity = 0.5
-
-[widget.notifications]
-capsule = true
-capsule_opacity = 0.0
-capsule_padding = 0
-
 [widget.session]
-capsule = true
-capsule_opacity = 0.0
-capsule_padding = 0
 icon_color = "error"
-scale = 1.1000000000000001
+scale = 1.1
 
 [widget.sysmon]
-anchor = true
-capsule_opacity = 0.5
-capsule_radius = 6
 stat = "ram_used"
 
 [widget.tray]
-capsule = true
-capsule_opacity = 0.0
-capsule_padding = 0
-hidden = [ "Udiskie" ]
-
-[widget.volume]
-capsule = true
-capsule_opacity = 0.5
+hidden = ["Udiskie"]
 
 [widget.workspaces]
-capsule = true
-capsule_opacity = 0.0
-capsule_padding = 0
 font_weight = 600
 label_source = "name"
 max_label_chars = 20
+
+[widget.left-gap]
+type = "spacer"
+length = 12
+capsule = false
+interactive = false

@@ -20,7 +20,7 @@ let
     };
 
     decoration = {
-      rounding = 7;
+      rounding = 12;
       active_opacity = 1.0;
       inactive_opacity = 1.0;
 
@@ -213,16 +213,16 @@ in
       local animations = {
           { "border", 1.6, "liner" },
           { "borderangle", 82, "liner", "once" },
-          { "windowsIn", 3.2, "winIn", "slide" },
-          { "windowsOut", 2.8, "easeOutCirc" },
-          { "windowsMove", 3.0, "wind", "slide" },
-          { "fade", 1.8, "md3_decel" },
+          { "windowsIn", 2.2, "md3_decel", "slide" },
+          { "windowsOut", 1.6, "md3_accel" },
+          { "windowsMove", 2.0, "md3_standard", "slide" },
+          { "fade", 1.4, "md3_decel" },
           { "layersIn", 1.8, "menu_decel", "slide" },
           { "layersOut", 1.5, "menu_accel" },
           { "fadeLayersIn", 1.6, "menu_decel" },
           { "fadeLayersOut", 1.8, "menu_accel" },
-          { "workspaces", 4.0, "menu_decel", "slide" },
-          { "specialWorkspace", 2.3, "md3_decel", "slidefadevert 15%" },
+          { "workspaces", 2.8, "md3_standard", "slide" },
+          { "specialWorkspace", 1.8, "md3_decel", "slidefadevert 15%" },
       }
 
       for _, animation in ipairs(animations) do

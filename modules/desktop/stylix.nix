@@ -21,6 +21,12 @@
           default = inputs.self + "/wallpapers/gruvified-wallpaper.png";
           description = "Path to the wallpaper image for Stylix and Noctalia.";
         };
+
+        scheme = lib.mkOption {
+          type = lib.types.str;
+          default = "gruvbox-material-dark-hard";
+          description = "Base16 scheme name from base16-schemes.";
+        };
       };
 
       config = lib.mkIf cfg.enable {
@@ -29,7 +35,7 @@
 
           image = cfg.wallpaper;
           polarity = "dark";
-          base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
+          base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.scheme}.yaml";
 
           opacity.popups = 0.8;
 
