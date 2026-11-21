@@ -229,7 +229,7 @@ in
           hl.animation({
               leaf = animation[1],
               enabled = true,
-              speed = animation[2],
+              speed = animation[2] / 1.5,
               bezier = animation[3],
               style = animation[4],
           })

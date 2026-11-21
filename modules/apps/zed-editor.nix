@@ -131,8 +131,8 @@
                   brighten =
                     hex:
                     let
-                      saturation = 1.75;
-                      brightness = 1.12;
+                      saturation = 2.00;
+                      brightness = 1.20;
 
                       channels = map (offset: lib.fromHexString (builtins.substring offset 2 hex)) [
                         0

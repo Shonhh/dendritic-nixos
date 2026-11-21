@@ -72,8 +72,8 @@
                 border = {
                   enable = true;
                   width = 2;
-                  active.color = "#a6c8ff";
-                  inactive.color = "#444444";
+                  active.color = config.lib.stylix.colors.withHashtag.base0D;
+                  inactive.color = config.lib.stylix.colors.withHashtag.base03;
                 };
 
                 "focus-ring".enable = false;
