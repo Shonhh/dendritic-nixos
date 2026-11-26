@@ -16,7 +16,6 @@ margin_ends = 0
 panel_overlap = 0
 radius = 0
 shadow = false
-start = [ "control-center", "left-gap", "launcher", "left-gap", "clipboard", "left-gap", "sysmon", "left-gap", "media" ]
 widget_spacing = 8
 
 [battery]

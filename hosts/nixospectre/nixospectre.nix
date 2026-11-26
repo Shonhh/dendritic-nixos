@@ -134,6 +134,10 @@ in
             };
 
             stylix.wallpaper = inputs.self + "/wallpapers/gruvified-wallpaper5.png";
+            liveWallpaper = {
+              enable = true;
+              scenes."eDP-1" = "3553595416"; # Workshop ID
+            };
           };
         };
       };

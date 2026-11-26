@@ -12,6 +12,7 @@
     let
       cfg = config.mySystem.desktop.noctalia;
       repositoryDirectory = config.mySystem.repository.directory;
+      liveWallpaperEnabled = config.mySystem.desktop.liveWallpaper.enable;
     in
     {
       options.mySystem.desktop.noctalia.enable = lib.mkEnableOption "Noctalia Shell";
@@ -60,6 +61,27 @@
             programs.noctalia = {
               enable = true;
               systemd.enable = true;
+
+              settings = {
+                bar.default.start = [
+                  "control-center"
+                  "left-gap"
+                  "launcher"
+                  "left-gap"
+                  "clipboard"
+                  "left-gap"
+                  "sysmon"
+                  "left-gap"
+                  "media"
+                ] ++ lib.optionals liveWallpaperEnabled [ "live-wallpaper" ];
+              } // lib.optionalAttrs liveWallpaperEnabled {
+                widget.live-wallpaper = {
+                  type = "custom_button";
+                  glyph = "photo";
+                  tooltip = "Switch between static and animated wallpaper";
+                  actions.left = "exec toggle-live-wallpaper";
+                };
+              };
             };
 
             # Noctalia writes GUI changes to:
