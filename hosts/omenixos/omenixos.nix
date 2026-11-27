@@ -105,6 +105,15 @@ in
           };
 
           stylix.wallpaper = inputs.self + "/wallpapers/gruvified-wallpaper3.png";
+          liveWallpaper = {
+            enable = true;
+            assetsPath = "/mnt/shared/SteamLibrary/steamapps/common/wallpaper_engine/assets";
+
+            scenes = {
+              "HDMI-A-1" = "/mnt/shared/SteamLibrary/steamapps/workshop/content/431960/3238117266";
+              "DP-1" = "/mnt/shared/SteamLibrary/steamapps/workshop/content/431960/3238082868";
+            }; # Workshop IDs
+          };
         };
       };
     };
