@@ -2,7 +2,12 @@
 
 {
   flake.nixosModules.live-wallpaper =
-    { config, lib, pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     let
       cfg = config.mySystem.desktop.liveWallpaper;
 
@@ -62,8 +67,7 @@
           };
 
           # Keep Hyprpaper as the default at login.
-          systemd.user.services.linux-wallpaperengine.Install.WantedBy =
-            lib.mkForce [ ];
+          systemd.user.services.linux-wallpaperengine.Install.WantedBy = lib.mkForce [ ];
         };
       };
     };

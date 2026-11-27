@@ -73,8 +73,10 @@
                   "sysmon"
                   "left-gap"
                   "media"
-                ] ++ lib.optionals liveWallpaperEnabled [ "live-wallpaper" ];
-              } // lib.optionalAttrs liveWallpaperEnabled {
+                ]
+                ++ lib.optionals liveWallpaperEnabled [ "live-wallpaper" ];
+              }
+              // lib.optionalAttrs liveWallpaperEnabled {
                 widget.live-wallpaper = {
                   type = "custom_button";
                   glyph = "photo";
